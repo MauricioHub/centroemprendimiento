@@ -1,0 +1,14 @@
+.balloon {
+    background-color: #313592;
+    color: white;
+}
+.balloon:before {
+    content:"";
+    width: 0;
+    height: 0;
+    position: absolute;
+    margin: 30px 0 0 10px;
+    border-top: 20px solid chocolate;
+    border-right: 18px solid transparent;
+    border-left: 18px solid transparent;
+}

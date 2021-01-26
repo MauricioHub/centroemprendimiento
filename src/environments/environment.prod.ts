@@ -1,0 +1,20 @@
+export const environment = {
+  production: true,
+  auth: "auth",
+  cache: "cache",
+  fake: "fake",
+  error: "error",
+  profiler: "profiler",
+  notify: "notify",
+  header: "header",
+  convert: "convert",
+  loader: "loader",
+  https: "https",
+  base_api_url: "https://epico.gob.ec/ce_rest/servicio/",
+  domain: "https://epico.gob.ec/",
+  login: "/auth",
+  usuario: "user",
+  home: "/home",
+  registro: "https://epico.gob.ec/centro_emprendimiento/registro_emprendedor.php",
+  pathActividad: '/paginas/servicios/programas/subprograma/etapa/'
+};

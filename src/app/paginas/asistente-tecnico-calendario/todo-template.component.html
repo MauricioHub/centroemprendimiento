@@ -1,0 +1,9 @@
+<div class="to-do-list mb-3">
+    <div class="d-inline-block">
+      <label class="check-task custom-control custom-checkbox d-flex justify-content-center">
+        <input type="checkbox" class="custom-control-input" id="customCheck1" (change)="completeTodoList($event)" disabled>
+        <span class="custom-control-label">{{ todoName }}</span>
+      </label> 
+    </div>
+    <div class="float-right"><a class="delete_todolist" (click)="deleteTodoItem($event)" appTodoListRemove><i class="far fa-trash-alt"></i></a></div>
+</div>

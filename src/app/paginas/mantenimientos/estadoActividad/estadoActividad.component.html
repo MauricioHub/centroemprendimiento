@@ -1,0 +1,14 @@
+<div>
+  <app-general [tabla]="tabla" [grabarControlador]="grabarControlador" 
+    (getData)="setData($event)" [isComponent]="true"
+    [campos]="campos" [camposLista]="camposLista">
+    <div class="row app-campos-add" *ngIf="registro">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Código</label>
+          <input type="text" class="form-control" id="Name" placeholder="Código" [(ngModel)]="registro.codigo">
+        </div>
+      </div>
+    </div>
+  </app-general>
+</div>

@@ -1,0 +1,75 @@
+<div class="col-xl-12 pro-det-mostrar" *ngIf="!editable || !editar">
+  <br>
+  <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Redes Sociales</h6>
+  <div class="row">
+    <div class="col-sm-6">
+      <p class="m-b-10 f-w-600">Teléfono</p>
+      <h6 class="text-muted f-w-400" [innerText]="persona.telefono">0023-333-526136</h6>
+    </div>
+    <div class="col-sm-6">
+      <p class="m-b-10 f-w-600">Email</p>
+      <h6 class="text-muted f-w-400">
+        <a [innerText]="persona.email" [href]="'mailto:'+persona.email+'?Subject=Hello%20again'"
+          target="_top">jeny@gmail.com</a>
+      </h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6" *ngFor="let red of persona.redes_sociales">
+      <p class="m-b-10 f-w-600" [innerText]="red.nombre">Email</p>
+      <h6 class="text-muted f-w-400" [innerText]="red.red?red.red:'Sin '+red.nombre">0023-333-526136
+      </h6>
+    </div>
+  </div>
+</div>
+<div class="col-xl-12 pro-det-edit" *ngIf="editable && editar">
+  <br>
+  <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Redes Sociales</h6>
+  <form id='form-datos-redes' [formGroup]="formRedes">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label font-weight-bolder">Teléfono</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name='telefono_contacto'
+          [(ngModel)]="persona.telefono" required placeholder="Teléfono"
+          formControlName="telefono"
+          [ngClass]="{'is-invalid': getValid(formRedes.controls.telefono)}">
+          <label id="validation-nombre-error" 
+            *ngIf="getValid(formRedes.controls.telefono)"
+            class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label font-weight-bolder">Email</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name='email_contacto' [(ngModel)]="persona.email"
+          required placeholder="Email"
+          formControlName="email"
+          [ngClass]="{'is-invalid': getValid(formRedes.controls.email)}">
+          <label id="validation-nombre-error" 
+            *ngIf="getValid(formRedes.controls.email)"
+            class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+      </div>
+    </div>
+    <div>
+      <div class="form-group row" *ngFor="let red of persona.redes_sociales">
+        <label class="col-sm-3 col-form-label font-weight-bolder"
+          [innerText]="red.nombre">Twitter</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="red.red" [attr.placeholder]="red.id == '1' ? 'https://www.facebook.com/epicogye' : 
+                                          red.id == '2' ? 'https://www.instagram.com/epicogye/' :
+                                          red.id == '3' ? 'https://twitter.com/epicogye' :
+                                          red.id == '4' ? 'https://epico.gob.ec' : 'URL' "
+            vurl="true">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"></label>
+      <div class="col-sm-9">
+        <button type="submit" class="btn btn-primary col-sm-6"
+          (click)="grabarPersona(formRedes)">Grabar</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,150 @@
+<div class="row" *ngIf="!detalle">
+  <div class="col-sm-12">
+    <app-card [options]="false" cardTitle="Filtros" cardClass="user-profile-list">
+      <div class="row align-items-center m-l-0">
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Nombre del emprendedor</label>
+            <input type="text" class="form-control" uppercase [(ngModel)]="paramentros.nombre">
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Email</label>
+            <input type="text" class="form-control" lowercase [(ngModel)]="paramentros.email">
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Nombre del emprendimiento</label>
+            <input type="text" class="form-control" uppercase [(ngModel)]="paramentros.nombre_emprendimiento">
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Programa</label>
+            <select class="form-control" [(ngModel)]="paramentros.id_programa" (change)="consultarSubProgramas()">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaPrograma" [value]="item.id" [innerText]="item.nombre"></option>
+            </select>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Sub Programa</label>
+            <select class="form-control" [(ngModel)]="paramentros.id_sub_programa" (change)="consultarEtapas()">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaSubPrograma" [value]="item.id" [innerText]="item.nombre"></option>
+            </select>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Etapa</label>
+            <select class="form-control" [(ngModel)]="paramentros.id_etapa" (change)="consultarActividades()">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaEtapa" [value]="item.id" [innerText]="item.nombre"></option>
+            </select>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Actividad</label>
+            <select class="form-control" [(ngModel)]="paramentros.id_actividad">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaActividad" [value]="item.id" [innerText]="item.nombre"></option>
+            </select>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Estado actividad</label>
+            <select class="form-control" [(ngModel)]="paramentros.estado_actividad">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaEstadoActividad" [value]="item.codigo" [innerText]="item.nombre">
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class="form-group form-group-sm mb-3">
+            <label class="form-control-label">Taller</label>
+            <select class="form-control" [(ngModel)]="paramentros.id_evento">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaTalleres" [value]="item.id"
+                [innerText]="item.nombre + ': '+ item.fecha + ' (' + item.hora_inicio + ' - ' + item.hora_fin + ')'">
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center m-l-0">
+        <div class='col-md-6'>
+          <button class="btn btn-info" (click)="getEmprendedores()">Consultar</button>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div class="row" [hidden]="detalle">
+  <div class="col-sm-12">
+    <app-card [options]="false" [hidHeader]="true" >
+      <div class="row">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right form-inline" style="display: block !important;">
+          <app-exportar [lista]="emprendedores"></app-exportar>
+        </div>
+      </div>
+      <div class="row user-profile-list">
+        <div class="col-sm-12">
+          <div class="dt-responsive table-responsive">
+            <table datatable [dtOptions]="dataTableOptions" [dtTrigger]="dtTrigger"
+              class="table table-striped row-border table-hover">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Emprendimiento</th>
+                  <th>Fase</th>
+                  <th>RUC</th>
+                  <th>Nombre Comercial</th>
+                  <th>Telefono</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let emprendedor of emprendedores">
+                  <td>
+                    <div class="d-inline-block align-middle">
+                      <img [src]="emprendedor.url_foto ? emprendedor.url_foto : 'images/user.png'" alt="user image"
+                        (error)="pictNotLoading($event)"
+                        class="img-radius align-top m-r-15" style="width:40px;">
+                      <div class="d-inline-block">
+                        <h6 class="m-b-0">{{emprendedor.nombre + ' ' + emprendedor.apellido}}</h6>
+                        <p class="m-b-0">{{emprendedor.email}}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{emprendedor.nombre_emprendimiento}}</td>
+                  <td>{{emprendedor.fase_nombre}}</td>
+                  <td>{{emprendedor.ruc_rise}}</td>
+                  <td>{{emprendedor.nombre_comercial}}</td>
+                  <td>
+                    {{emprendedor.telefono}}
+                    <div class="overlay-edit">
+                      <button type="button" class="btn btn-icon btn-success" (click)="selectEmprendedor(emprendedor)"><i
+                          class="feather icon-search"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div class="row" *ngIf="detalle">
+  <app-emprendedor [persona]="persona" [emprendedor]="emprendedor" [usuario]="usuario"></app-emprendedor>
+</div>

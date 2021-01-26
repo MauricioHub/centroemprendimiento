@@ -1,0 +1,51 @@
+<app-card [hidHeader]="true" cardClass="table-card" blockClass="pt-2" [options]="false">
+  <div class="row align-items-center m-l-0">
+    <div class="col-sm-6"></div>
+    <div class="col-sm-6 text-right form-inline" style="display: block !important;">
+      <select class="form-control" name="etapa_emprendimiento" [(ngModel)]="id_etapa" placeholder="Seleccione"
+        (change)="consultarIndicadoresFase()">
+        <option *ngFor="let item of listaEtapas" [value]="item.id" [innerText]="item.nombre"></option>
+      </select>
+      <button class="btn btn-warning btn-sm btn-round has-ripple mr-2" (click)="descargar('ACTIVIDAD_ETAPA', null)">
+        <i class="fas fa-cloud-download-alt"></i>Excel
+      </button>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-hover m-0 table-sm">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Orden</th>
+              <th>Actividad</th>
+              <th>Cur. Fase</th>
+              <th>Asign. </th>
+              <th>No Asign.</th>
+              <th>Finalizado</th>
+              <th>Sin finalizar</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let act of listaActividad">
+              <td><i class="fas fa-cloud-download-alt" (click)="descargar('PERSONAS_ACTIVIDAD', act)"></i></td>
+              <td [innerText]="act.orden"></td>
+              <td [innerText]="act.nombre"></td>
+              <td [innerText]="act.inscritos"></td>
+              <td class="text-c-blue">
+                <a href="javascript:" (click)="descargar('PERSONAS_ACTIVIDAD_ASIGNADO', act)"
+                  [innerText]="act.tomado"></a>
+              </td>
+              <td class="text-c-red">
+                <a href="javascript:" (click)="descargar('PERSONAS_ACTIVIDAD_NOASIGNADO', act)"
+                  [innerText]="act.no_tomado"></a>
+              </td>
+              <td class="text-c-green" [innerText]="act.finalizado">68%</td>
+              <td class="text-c-yellow" [innerText]="act.noFinalizado"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</app-card>

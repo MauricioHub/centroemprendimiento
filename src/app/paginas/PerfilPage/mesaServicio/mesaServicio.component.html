@@ -1,0 +1,62 @@
+<app-perfilHeader [persona]="persona">
+  <ul class="nav nav-tabs profile-tabs nav-fill app-option-perfil" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'gallery'}"
+        (click)="this.activeTab = 'gallery';" id="gallery-tab" data-toggle="tab" href="javascript:"
+        role="tab" aria-controls="gallery" aria-selected="false"><i class="feather icon-image mr-2"></i>Agenda</a>
+    </li>
+    <!--li class="nav-item">
+      <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'home'}" (click)="this.activeTab = 'home'"
+        id="home-tab" data-toggle="tab" href="javascript:" role="tab" aria-controls="home" aria-selected="true"><i
+          class="feather icon-home mr-2"></i>Home</a>
+    </li-->
+    <li class="nav-item">
+      <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'profile'}"
+        (click)="this.activeTab = 'profile'" id="profile-tab" data-toggle="tab" href="javascript:" role="tab"
+        aria-controls="profile" aria-selected="false"><i class="feather icon-user mr-2"></i>Mesa de servicio</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'contact'}"
+        (click)="this.activeTab = 'contact'" id="contact-tab" data-toggle="tab" href="javascript:" role="tab"
+        aria-controls="contact" aria-selected="false"><i class="feather icon-phone mr-2"></i>Red de
+        emprendedores</a>
+    </li>
+  </ul>
+</app-perfilHeader>
+<!-- profile body start -->
+<div class="row">
+  <div class="col-md-8 order-md-2">
+    <div class="tab-content" id="myTabContent">
+
+      <div class="tab-pane fade" [ngClass]="{'show active': this.activeTab === 'home'}" id="home" role="tabpanel"
+        aria-labelledby="home-tab">
+
+      </div>
+
+      <div class="tab-pane fade" [ngClass]="{'show active': this.activeTab === 'profile'}" id="profile" role="tabpanel"
+        aria-labelledby="profile-tab">
+        <div class="row">
+          <div class="col-12">
+            <app-perfil [persona]="persona"></app-perfil>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" [ngClass]="{'show active': this.activeTab === 'contact'}" id="contact" role="tabpanel"
+        aria-labelledby="contact-tab">
+        <app-redEmprendedores></app-redEmprendedores>
+      </div>
+
+      <div class="tab-pane fade" [ngClass]="{'show active': this.activeTab === 'gallery'}" id="gallery" role="tabpanel"
+        aria-labelledby="gallery-tab">
+        <app-mesa-consulta-calendario></app-mesa-consulta-calendario>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 order-md-1">
+    <app-card cardTitle="Eventos" cardClass="mb-0" [options]="false">
+      <app-eventos></app-eventos>
+    </app-card>
+  </div>
+</div>
+<!-- profile body end -->

@@ -1,0 +1,275 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" cardClass="user-profile-list" [options]="false">
+      <div class="row align-items-center m-l-0">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right">
+          <button class="btn btn-success btn-sm btn-round has-ripple" (click)="nuevo()"><i
+              class="feather icon-plus"></i> Nuevo
+          </button>
+        </div>
+      </div>
+      <div class="dt-responsive table-responsive">
+        <table datatable class="row-border hover" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Identificacion</th>
+              <th>Direccion</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of lista">
+              <td>{{ item.id }}</td>
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.apellido }}</td>
+              <td>{{ item.identificacion }}</td>
+              <td>{{ item.direccion }}</td>
+              <td>
+                <span class="badge "
+                  [ngClass]="{'badge-success': item.estado == 'A',
+                                  'badge-danger': item.estado == 'I'}">{{item.estado == 'A'?'Activo' : 'Inactivo'}}</span>
+                <div class="overlay-edit">
+                  <button type="button" class="btn btn-icon btn-success" (click)="editar(item)"><i
+                      class="feather icon-check-circle"></i></button>
+                  <button type="button" class="btn btn-icon btn-danger" (click)="eliminar(item)"><i
+                      class="feather icon-trash-2"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<app-ui-modal [dialogClass]="'modal-lg'" #editarModal>
+  <div class="app-modal-header" *ngIf="registro">
+    <h5 class="modal-title" [innerText]="registro.nombre">Modal Title</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="editarModal.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body" *ngIf="registro">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="TipoIdentificacion">Tipo identificaci&oacute;n</label>
+          <select class="form-control" name="TipoIdentificacion" [(ngModel)]="registro.tipo_identificacion">
+            <option value="">Tipo de identificaci&oacute;n</option>
+            <option value="C">Cedula</option>
+            <option value="P">Pasaporte</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="noIdentificacion">No. Identificaci&oacute;n</label>
+          <input type="text" class="form-control" id="noIdentificacion" placeholder="No. identificaci&oacute;n"
+            [(ngModel)]="registro.identificacion">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Nombre</label>
+            <input type="text" class="form-control" id="Name" placeholder="Nombre" [(ngModel)]="registro.nombre">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div>
+          <label>Fecha nacimiento</label>
+        </div>
+        <div class="input-group mb-3">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp1" [(ngModel)]="birthDate"
+            (ngModelChange)="birthDateBrowse($event)" ngbDatepicker #d1="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+              <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="Lastname">Apellido</label>
+          <input type="text" class="form-control" id="Lastname" placeholder="Apellido" [(ngModel)]="registro.apellido">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputGenero1">G&eacute;nero</label>
+          <select class="form-control" name="genero" [(ngModel)]="registro.id_genero">
+            <option value="">G&eacute;nero</option>
+            <option value="1">Masculino</option>
+            <option value="2">Femenino</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">E-mail</label>
+          <input type="text" class="form-control" id="Email" placeholder="E-mail" [(ngModel)]="registro.email">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="ciudad">Provincia</label>
+          <select class="form-control" name="ciudad" [(ngModel)]="registro.id_provincia" (change)="getCitiesLst()">
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of provinciasList" [value]="item.id" [innerText]="item.nombre"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="ciudad">Ciudad</label>
+          <select class="form-control" name="ciudad" [(ngModel)]="registro.id_ciudad">
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of citiesLst" [value]="item.id" [innerText]="item.nombre"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Direcci&oacute;n</label>
+          <input type="text" class="form-control" id="direccion" placeholder="Direcci&oacute;n"
+            [(ngModel)]="registro.direccion">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="situacion">Situaci&oacute;n laboral</label>
+          <select class="form-control" name="situacion" [(ngModel)]="registro.id_situacion_laboral">
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of jobSituationLst" [value]="item.id" [innerText]="item.nombre"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputTelefono1">Tel&eacute;fono</label>
+          <input type="text" class="form-control" id="telefono" placeholder="Tel&eacute;fono"
+            [(ngModel)]="registro.telefono">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="nivel">Nivel acad&eacute;mico</label>
+          <select class="form-control" name="nivel" [(ngModel)]="registro.id_nivel_academico">
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of academicGradeLst" [value]="item.id" [innerText]="item.nombre"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputConvencional1">Tel&eacute;fono fijo</label>
+          <input type="text" class="form-control" id="convencional" placeholder="Convencional"
+            [(ngModel)]="registro.telefono_fijo">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="interes">Inter&eacute;s &Eacute;pico</label>
+          <select class="form-control" name="interes" [(ngModel)]="registro.id_interes_centro_emprendimiento" disabled>
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of interestedDueLst" [value]="item.id" [innerText]="item.nombre"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputPerfil1">Perfil</label>
+          <input type="text" class="form-control" id="perfil" placeholder="Perfil" [(ngModel)]="registro.perfil">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputFPerfil1">Frase perfil</label>
+          <input type="text" class="form-control" id="fperfil" placeholder="Frase perfil"
+            [(ngModel)]="registro.frase_perfil">
+        </div>
+      </div>
+      <div class="col-sm-6" *ngIf="isCreate">
+        <label for="usuCheck">Usuario</label>
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="usuCheck" [(ngModel)]="radioUsu" [checked]="false"> Crear usuario
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6" *ngIf="isCreate">
+        <div class="form-group" *ngIf="radioUsu">
+          <label for="exampleInputInstitucion">Instituci&oacute;n</label>
+          <select class="form-control" name="interes" [(ngModel)]="registro.id_institucion">
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of institutionLst" [value]="item.id" [innerText]="item.nombre"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="editarModal.hide()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="preGrabar()">Grabar</button>
+  </div>
+</app-ui-modal>
+
+<!-- <app-ui-modal [dialogClass]="'modal-lg'" #horarioModal>
+    <div class="app-modal-header" *ngIf="eventoPadre">
+      <h5 class="modal-title" [innerText]="eventoPadre.nombre">Modal Title</h5>
+      <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+        (click)="horarioModal.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body" *ngIf="eventoPadre">
+      <div class="row">
+        <div class="col-sm-6">
+        </div>
+        <div class="col-sm-6 text-right">
+          <button class="btn btn-sm btn-info " (click)="nuevoHorario()">Agregar horario</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="dt-responsive table-responsive">
+            <table class="table table-striped row-border table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Evento</th>
+                  <th>Fecha</th>
+                  <th>Horario</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listaHorarios">
+                  <td [innerText]="item.id"></td>
+                  <td [innerText]="item.nombre"></td>
+                  <td [innerText]="item.fecha"></td>
+                  <td [innerText]="item.hora_inicio + ' - ' + item.hora_fin"></td>
+                  <td>
+                    <span class="badge "
+                      [ngClass]="{'badge-success': item.estado == 'A',
+                                    'badge-danger': item.estado == 'I'}">{{item.estado == 'A'?'Activo' : 'Inactivo'}}</span>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-danger" (click)="eliminar(item)"><i class="feather icon-trash-2"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-ui-modal> -->

@@ -1,0 +1,14 @@
+<app-emprendimiento 
+    #emprendimientoComponent
+    [id_emprendedor]="id_emprendedor" 
+    [id_emprendimiento]="id_emprendimiento" 
+    [id_persona]="id_persona" 
+    [_emprendimiento]="emprendimiento" 
+    [_emprendedor]="emprendedor" 
+    (emprendimiento)="setEmprendimiento($event)"
+    (emprendedor)="setEmprendedor($event)"
+    (finalizar)="finalizarActividad($event)"
+    (grabar)="actualizarActividad($event)"
+    [finalizado]="actividad_seleccionada.estado_actividad_inscripcion == 'AP'"
+    >
+</app-emprendimiento>

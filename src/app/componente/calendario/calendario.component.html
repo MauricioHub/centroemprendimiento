@@ -1,0 +1,55 @@
+<app-card cardTitle="Agenda" cardClass="mb-0" [options]="false">
+  <div class="app" *ngIf="!notSupported">
+    <div class="app-calendar">
+      <full-calendar #Eventcalendar defaultView="dayGridMonth" [header]="{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarAgenda"
+        locale="es"
+        [defaultDate]="fechaActual" (eventClick)="eventClick($event)"></full-calendar>
+    </div>
+  </div>
+</app-card>
+
+<app-ui-modal #modalEvento [dialogClass]="'modal-md'">
+  <div class="app-modal-header">
+    <h5 class="modal-title">Agenda</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="modalEvento.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body" *ngIf="evento">
+    <div class="text-center">
+      <h5>
+        <span [innerText]="evento.tema?evento.tema:evento.tipo"></span> 
+        <br>
+        <span class="badge badge-success" [innerText]="evento.tipo">Placement</span>
+      </h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-sm mb-0">
+        <tbody>
+          <tr>
+            <td>Fecha</td>
+            <td [innerText]="evento.fecha"></td>
+          </tr>
+          <tr>
+            <td>Hora inicio</td>
+            <td [innerText]="evento.hora_inicio"></td>
+          </tr>
+          <tr>
+            <td>Hora fin</td>
+            <td [innerText]="evento.hora_fin"></td>
+          </tr>
+          <tr *ngIf="evento.nombre2">
+            <td>Asistente/Mentor</td>
+            <td [innerText]="evento.nombre2"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-danger mt-md-0 mt-2" (click)="cancelarAgenda()">Cancelar agenda</button>
+    </div>
+  </div>
+</app-ui-modal>

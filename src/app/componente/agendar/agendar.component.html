@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-xl-12 col-sm-12">
+    <full-calendar #Eventcalendar 
+      defaultView="timeGridWeek"
+      [minTime]="'07:00:00'"
+      [maxTime]="'21:00:00'"
+      [editable]="editable"
+      [slotDuration]="'01:00:00'"
+      [allDaySlot]="allDaySlot"
+      [selectable]="selectable"
+      locale="es"
+      [header]="{
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      }" 
+      [plugins]="calendarPlugins" 
+      [weekends]="calendarWeekends" 
+      [events]="listaEventos"
+      [defaultDate]="fechaActual" 
+      (select)="select($event)"
+      [eventAllow]="eventAllow"
+      [eventDurationEditable]="eventDurationEditable"
+      [selectConstraint]="selectConstraint"
+      [eventConstraint]="eventConstraint"
+      (eventRender)="eventRender($event)"
+      [hiddenDays]="hiddenDays"
+      [titleFormat]="titleFormat"
+      weekends= false
+    >
+    </full-calendar>
+  </div>
+</div>

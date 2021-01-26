@@ -1,0 +1,26 @@
+<div >
+  <app-general [tabla]="tabla" [grabarControlador]="grabarControlador" 
+    (getData)="setData($event)" [isComponent]="true"
+    (save)="grabar($event)" (delete)="eliminar($event)"
+    (getLista)="setLista($event)" [campos]="campos"
+    [camposLista]="camposLista">
+    <div class="row app-campos-add" *ngIf="registro">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Tipo</label>
+          <input type="text" class="form-control" id="Name" placeholder="Nombre" [(ngModel)]="registro.tipo">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Color</label>
+          <input class="form-control" 
+            [(colorPicker)]="registro.color" 
+            [style.background]="registro.color" 
+            [value]="registro.color" 
+            [cpPosition]="'bottom'"/>
+        </div>
+      </div>
+    </div>
+  </app-general>
+</div>

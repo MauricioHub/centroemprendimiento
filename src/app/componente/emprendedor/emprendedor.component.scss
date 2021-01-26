@@ -1,0 +1,32 @@
+.balloon {
+    background-color: #313592;
+    color: white;
+}
+.balloon:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    margin: 15px 0 0 0px;
+    border-top: 10px solid chocolate;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+}
+
+.ballon-btn{
+    font-size: 8px !important;
+    padding: 1px !important;
+}
+
+.etapa{
+    font-size: 9px;
+}
+
+.img-thumbnail2 {
+    /* padding: 0.25rem; */
+    background-color: #ecf0f5;
+    /* border: 1px solid #dee2e6; */
+    border-radius: 0.25rem;
+    max-width: 100%;
+    height: auto;
+}

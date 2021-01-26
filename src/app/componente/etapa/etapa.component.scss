@@ -1,0 +1,23 @@
+.modal-body{
+    background-color: #F7B619 !important;
+}
+
+.img-negro{
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.bg-c-gris {
+    background-color: #6c757dc9;
+}
+
+.etapaAprobada:before {
+    background: url("../../../assets/images/aprobado.png") no-repeat;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    content: "";
+    width: 55px;
+    height: 55px;
+    background-size: 100%;
+}

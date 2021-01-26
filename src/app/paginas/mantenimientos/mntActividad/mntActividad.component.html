@@ -1,0 +1,53 @@
+<div *ngIf="!editarActividad">
+  <div class="row">
+    <div class="col-sm-12">
+      <app-card cardTitle="Filtros" cardClass="user-profile-list" [options]="false">
+        <div class="row align-items-center m-l-0">
+          <div class="col-sm-6">
+            <select class="form-control" [(ngModel)]="idSubPrograma" (change)="consultarEtapas()">
+              <option *ngFor="let item of listaSubPrograma" [value]="item.id" [innerText]="item.nombre"></option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <select class="form-control" [(ngModel)]="idEtapa" (change)="consultarActividades()">
+              <option *ngFor="let item of listaEtapas" [value]="item.id" [innerText]="item.nombre"></option>
+            </select>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </div>
+  <div *ngIf="lista">
+    <app-general [tabla]="tabla" [grabarControlador]="grabarControlador" (getData)="setData($event)"
+      [isComponent]="true" (save)="grabar($event)" (delete)="eliminar($event)" (getLista)="setLista($event)"
+      [campos]="campos" [camposLista]="camposLista" [lista]="lista" [grabarControlador]="grabarControlador"
+      [openModal]="false" (eventNew)="eventNew($event)" (eventEdit)="eventEditar($event)">
+      <div class="row app-campos-add" *ngIf="registro">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Tipo</label>
+            <input type="text" class="form-control" id="Name" placeholder="Nombre" [(ngModel)]="registro.tipo">
+          </div>
+        </div>
+      </div>
+    </app-general>
+  </div>
+</div>
+
+<div *ngIf="editarActividad">
+  <div class="row">
+    <div class="col-sm-12">
+      <app-card cardTitle="Actividad" [options]="false" [options]="false">
+        <app-mntActividadEdit 
+          (cancelar)="cancelar()" 
+          [idPrograma]="idPrograma"
+          [idSubPrograma]="idSubPrograma"
+          [listaProgramas]="listaProgramas"
+          [listaSubPrograma]="listaSubPrograma"
+          [idEtapa]="idEtapa" 
+          [actividad]="registro"
+        ></app-mntActividadEdit>
+      </app-card>
+    </div>
+  </div>
+</div>

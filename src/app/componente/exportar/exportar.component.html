@@ -1,0 +1,56 @@
+<button class="btn btn-warning btn-sm btn-round has-ripple mr-2" (click)="descargar()">
+  <i class="fas fa-cloud-download-alt"></i>Excel
+</button>
+<app-ui-modal #camposModal [dialogClass]="'modal-md'">
+  <div class="app-modal-header">
+    <h5 class="modal-title">Campos a exportar</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="camposModal.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <button class="btn btn-info btn-sm btn-round has-ripple mr-2" (click)="_descargar()">
+      <i class="fas fa-cloud-download-alt"></i>Exportar
+    </button>
+    <br>
+    <form>
+      <div class="table-responsive">
+        <table class="table mb-0 text-left">
+          <thead>
+            <tr>
+              <th style="width: 5px;">
+                <div class="chk-option">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
+                    <input type="checkbox" class="custom-control-input" [(ngModel)]="todos"
+                      [ngModelOptions]="{standalone: true}" (change)="selectAll();">
+                    <span class="custom-control-label"></span>
+                  </label>
+                </div>
+              </th>
+              <th>Campo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let campo of campos">
+              <td style="width: 5px;">
+                <div class="chk-option">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
+                    <input type="checkbox" class="custom-control-input" 
+                      (change)="select()"
+                      [(ngModel)]="campo.selected" 
+                      [ngModelOptions]="{standalone: true}">
+                    <span class="custom-control-label"></span>
+                  </label>
+                </div>
+              </td>
+              <td [innerText]="campo.campo">Able Pro</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    <br>
+    <button class="btn btn-info btn-sm btn-round has-ripple mr-2" (click)="_descargar()">
+      <i class="fas fa-cloud-download-alt"></i>Exportar
+    </button>
+  </div>
+</app-ui-modal>

@@ -1,0 +1,91 @@
+<div class="row" >
+  <div class="col-sm-12">
+    <app-card [cardTitle]="title" cardClass="user-profile-list" [options]="false">
+      <form id="form_archivo">
+        <div class="row">
+            <div class="col-md-12">
+                <li class="media d-flex m-b-15">
+                    <div class="m-r-20 file-attach">
+                        <i class="far fa-file-pdf f-28 text-muted"></i>
+                    </div>
+                    <div class="media-body">
+                        <a [href]="archivoReferencia" target="_blank" class="m-b-5 d-block text-secondary">Archivo de referencia</a>
+                    </div>
+                    <div class="float-right text-muted">
+                        <i class="fas fa-download f-18"></i>
+                    </div>
+                </li>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <app-archivo
+                  [accept]="'.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'"
+                  [title]="'Subir archivo CSV'"
+                  (file)="verRegistros($event)"
+                ></app-archivo>
+            </div>
+        </div>
+        <div class="row align-items-center m-l-0">
+          <div class="col-sm-6"></div>
+          <div class="col-sm-6 text-right">
+            <button class="btn btn-success btn-sm btn-round has-ripple mr-2"
+              (click)="guardar()">
+              <i class="feather icon-save"></i>Guardar
+            </button>
+          </div>
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>
+<div class="row" >
+  <div class="col-sm-12">
+    <app-card cardTitle="Datos cargados" blockClass="table-border-style" [options]="false">
+      <div class="table-responsive">
+        <table class="table table-dark table-hover mb-0">
+          <thead>
+            <tr>
+              <th></th>
+              <th *ngFor="let campo of camposLista" [innerText]="campo.name">id</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="listaDatos" let-i="index">
+              <tr>
+                <td style="width: 5px;">
+                  <a href="javascript:" class="btn btn-sm" (click)="item.isCollapsed = !item.isCollapsed"
+                    [ngClass]="{'btn-success': item.statusTrasaction == 'AP',
+                                'btn-danger': item.statusTrasaction == 'ER',
+                                'btn-info': item.statusTrasaction == 'EP',
+                                'btn-warning': item.statusTrasaction == 'PE'}">
+                    <i class="feather " 
+                      [ngClass]="{'icon-eye': item.statusTrasaction == 'ER',
+                                'icon-check-circle': item.statusTrasaction == 'AP', 
+                                'icon-clock': item.statusTrasaction == 'EP', 
+                                'icon-info': item.statusTrasaction == 'PE'}"></i>
+                  </a>
+                </td>
+                <td *ngFor="let campo of camposLista; index as i" >
+                  <span [innerText]="item[campo.attr]"></span>
+                </td>
+              </tr>
+              <tr *ngIf="item.error" [ngbCollapse]="item.isCollapsed" class="bg-danger">
+                <td [attr.colspan]="(camposLista.length + 1)" [innerText]="getError(item)"></td>
+              </tr>
+              <tr *ngIf="item.mensaje" [ngbCollapse]="item.isCollapsed" class="bg-success">
+                <td [attr.colspan]="(camposLista.length + 1)" [innerText]="item.mensaje"></td>
+              </tr>
+            </ng-template>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th></th>
+              <th *ngFor="let campo of camposLista" [innerText]="campo.name">id</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

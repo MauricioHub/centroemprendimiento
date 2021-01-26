@@ -1,0 +1,14 @@
+<div class="app" *ngIf="!notSupported">
+  <div class="app-calendar">
+    <full-calendar #calendar defaultView="listWeek" [header]="{
+          left: 'prev',
+          center: 'title',
+          right: 'next'
+        }" locale="es" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarEvents"
+      [defaultDate]="fechaActual" (eventClick)="eventClick($event)">
+    </full-calendar>
+  </div>
+</div>
+<div class="col-sm-12 text-center" *ngIf="notSupported">
+  <div class="alert alert-danger"><code>css-animator</code> no es soportado por IE.</div>
+</div>

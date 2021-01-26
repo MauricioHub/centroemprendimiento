@@ -1,0 +1,130 @@
+<div class="row" *ngIf="rubrica">
+  <div class="col-xl-12 col-sm-12">
+    <div class="merge-card">
+      <app-card [cardTitle]="titulo" [options]="false" captionClass="mb-0 text-muted" cardClass="mb-0" blockClass="p-0"
+        [hidHeader]="hideHeader">
+        <form [formGroup]="formEvaluacion">
+          <div class="row align-items-center m-l-0" *ngIf="opciones">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6 text-right">
+              <button class="btn btn-warning btn-sm btn-round has-ripple mr-2" (click)="salir()">
+                <i class="feather icon-save"></i>Salir
+              </button>
+              <button class="btn btn-success btn-sm btn-round has-ripple mr-2" (click)="grabarEvaluacion()"
+                *ngIf="!hideGrabar">
+                <i class="feather icon-save"></i>Guardar
+              </button>
+              <button class="btn btn-info btn-sm btn-round has-ripple mr-2" (click)="finalizaEvaluacion()"
+                *ngIf="!hideFinalizar">
+                <i class="feather icon-save"></i>Guardar y Finalizar
+              </button>
+            </div>
+          </div>
+          <div class="row align-items-center m-l-0">
+            <div class="col-sm-12">
+              <p class="mb-0 pl-3 pt-1" [innerHTML]="rubrica.descripcion"></p>
+            </div>
+          </div>
+          <div class="accordion" id="accordionExample" cardClass="mb-0">
+            <div class="card mb-0 shadow-none border-top" *ngFor="let criterio of rubrica.criterios">
+              <div class="card-header" id="headingOne">
+                <div class="row align-items-center m-l-0">
+                  <div class="col-sm-6">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="BillingPaypal" class="custom-control-input input-criterio"
+                        data-toggle="collapse" aria-expanded="true" checked (data-target)="'#collapse_'+criterio.id"
+                        (aria-controls)="'collapse_'+criterio.id" id="btn-input-{{criterio.id}}"
+                        name="btn-input-{{criterio.id}}"
+                        data-bind="attr:{'data-target': '#collapse'+$index(), 'aria-controls': 'collapse'+$index(), 'id': 'btn-input'+$index()}">
+                      <label class="custom-control-label font-weight-bold" for="BillingPaypal"
+                        for="btn-input-{{criterio.id}}" [innerText]="criterio.criterio"
+                        data-bind="text: criterio, attr: {'for': 'btn-input'+$index()}"></label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 text-right calificacion" [innerText]="criterio.calificacionS"
+                    *ngIf="mostrarCalificacion">
+
+                  </div>
+                </div>
+
+              </div>
+              <div id="collapseOne" class="collapse" (aria-labelledby)="'heading'+criterio.id"
+                data-parent="#accordionExample" *ngFor="let criterio of rubrica.criterios; index as i;"
+                (id)="'collapse_'+criterio.id" [ngClass]="{'show': i==0}">
+                <div class="card-body">
+
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p class="mb-0 pl-3 pt-1" [innerHTML]="criterio.descripcion"></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <ol>
+                        <li class="list-group-item py-0" *ngFor="let pregunta of criterio.preguntas;">
+                          <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div class="form-group">
+                                      <label class="form-label" [innerText]="pregunta.pregunta">Custom radios</label>
+                                      <div class="custom-controls-stacked">
+                                        <label class="custom-control custom-radio custom-control-inline"
+                                          *ngFor="let calificacion of pregunta.calificaciones;">
+                                          <!-- custom-control-inline -->
+                                          <input type="radio" class="custom-control-input"
+                                            [name]="'pregunta_'+pregunta.id"
+                                            (id)="'calificacion_'+pregunta.id+'_'+calificacion.id_calificacion"
+                                            [value]="calificacion.calificacion"
+                                            [ngClass]="{'is-invalid': getValid(formEvaluacion.controls['pregunta_'+pregunta.id])}"
+                                            [formControlName]="'pregunta_'+pregunta.id"
+                                            [checked]="calificacion.calificacion == pregunta.calificacionS"
+                                            (change)="calcularEvaluacion(calificacion, pregunta, criterio, rubrica)"
+                                            required>
+                                          <span class="custom-control-label" [innerText]="calificacion.nombre"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td class="text-right calificacion" [innerText]="pregunta.calificacionS"
+                                    *ngIf="mostrarCalificacion">
+                                    $743.00
+                                  </td>
+
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-footer" *ngIf="opciones">
+          <div class="row align-items-center m-l-0">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6 text-right">
+              <button class="btn btn-warning btn-sm btn-round has-ripple mr-2" data-bind="click: salir">
+                <i class="feather icon-save"></i>Salir
+              </button>
+              <button class="btn btn-success btn-sm btn-round has-ripple mr-2" (click)="grabarEvaluacion()"
+                *ngIf="!hideGrabar">
+                <i class="feather icon-save"></i>Guardar
+              </button>
+              <button class="btn btn-info btn-sm btn-round has-ripple mr-2" (click)="finalizaEvaluacion()"
+                *ngIf="!hideFinalizar">
+                <i class="feather icon-save"></i>Guardar y Finalizar
+              </button>
+            </div>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </div>
+</div>

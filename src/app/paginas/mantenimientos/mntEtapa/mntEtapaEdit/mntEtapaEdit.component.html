@@ -1,0 +1,98 @@
+<div class="row align-items-center m-l-0">
+  <div class="col-sm-6"></div>
+  <div class="col-sm-6 text-right">
+    <button class="btn btn-warning btn-sm btn-round has-ripple mr-2" (click)="_cancelar()">
+      <i class="feather icon-save"></i>Cancelar
+    </button>
+    <button class="btn btn-success btn-sm btn-round has-ripple mr-2" (click)="grabar()">
+      <i class="feather icon-save"></i>Guardar
+    </button>
+  </div>
+</div>
+
+<div class="app-card-footer">
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Programa</label>
+        <select class="form-control" required [(ngModel)]="idPrograma" placeholder="Seleccione" (change)="consultarSubProgramas()" 
+          [disabled]="!editarCabecera">
+          <option *ngFor="let item of listaProgramas" [value]="item.id" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Sub programa</label>
+        <select class="form-control" required [(ngModel)]="etapa.id_sub_programa" placeholder="Seleccione" [disabled]="!editarCabecera">
+          <option *ngFor="let item of listaSubPrograma" [value]="item.id" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Nombre Etapa</label>
+        <input type="text" class="form-control" required placeholder="Nombre Etapa" [(ngModel)]="etapa.nombre">
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Orden</label>
+        <input type="text" class="form-control" required placeholder="Orden" readonly [(ngModel)]="etapa.orden">
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Fecha inicio</label>
+        <input type="text" class="form-control" placeholder="Fecha inicio"
+          [(ngModel)]="etapa.inicio">
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Fecha fin</label>
+        <input type="date" class="form-control" placeholder="Fecha fin"
+          [(ngModel)]="etapa.fin">
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Estado</label>
+        <select class="form-control" name="emprendimiento_formalizado" required placeholder="Seleccione"
+          [(ngModel)]="etapa.estado">
+          <option>Seleccione</option>
+          <option value="A">Activo</option>
+          <option value="I">Inactivo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-3">
+      <div class="form-group mb-3">
+        <app-archivo [title]="'Banner'" [url]="etapa.url_banner" [accept]="'image.*'" [vistaPrevia]="true" (file)="bannerFile=$event;"></app-archivo>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group mb-3">
+        <app-archivo [title]="'Logo'" [url]="etapa.url_logo" [accept]="'image.*'" [vistaPrevia]="true" (file)="logoFile=$event;"></app-archivo>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group mb-3">
+        <app-archivo [title]="'Icono'" [url]="etapa.url_icono" [accept]="'image.*'" [vistaPrevia]="true" (file)="iconoFile=$event;"></app-archivo>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group mb-3">
+        <app-archivo [title]="'Plan de trabajo'" [url]="etapa.url_plan_trabajo" [accept]="'.pdf'" [vistaPrevia]="true" (file)="archivoFile=$event;"></app-archivo>
+      </div>
+    </div>
+  </div>
+</div>

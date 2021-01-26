@@ -1,0 +1,31 @@
+.modal-intro{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.modal-intro > .contenido{
+    background-image: url("../../../../images/fondo.png");
+    background-position: center;
+}
+.modal-intro > .contenido:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.modal-body{
+    background-image: url("../../../../images/fondo.png");
+    background-position: center;
+}
+.logoCE{
+    width: 150px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.texto-modal{
+    color: #2623a3;
+}
+.btn-morado{
+    background-color: #2623a3 !important;
+    border-color: #2623a3 !important;
+    opacity: 0.9 !important;
+}

@@ -1,0 +1,79 @@
+<app-card [customHeader]="true" 
+  headerClass="border-0 p-2 pb-0" 
+  [options]="false" 
+  cardClass="user-card user-card-2 shape-right" 
+  blockClass="pt-0">
+  <div class="app-card-header">
+    <div class="cover-img-block">
+      <img src="images/bannerCE.jpg" alt="" class="img-fluid">
+      <div class="overlay"></div>
+      <div class="change-cover">
+        <div class="dropdown" ngbDropdown placement="bottom-left">
+          <a class="drp-icon dropdown-toggle" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon feather icon-camera"></i></a>
+          <!--div class="dropdown-menu" ngbDropdownMenu>
+            <a class="dropdown-item" href="javascript:"><i class="feather icon-upload-cloud mr-2"></i>upload new</a>
+            <a class="dropdown-item" href="javascript:"><i class="feather icon-image mr-2"></i>from photos</a>
+            <a class="dropdown-item" href="javascript:"><i class="feather icon-film mr-2"></i> upload video</a>
+            <a class="dropdown-item" href="javascript:"><i class="feather icon-trash-2 mr-2"></i>remove</a>
+          </div-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="user-about-block">
+    <div class="row align-items-center">
+      <div class="col">
+        <div class="row align-items-center">
+          <div class="col-auto col pr-0">
+            <app-fotoPerfil [usuario]="usuario"></app-fotoPerfil>
+          </div>
+          <div class="col">
+            <h6 class="mb-1" [innerText]="usuario.getName()">Lary Doe</h6>
+            <p class="mb-0" [innerText]="persona.frase_perfil ? persona.frase_perfil : 'Preséntate en 100 caracteres'">UI/UX Designer</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <ul class="list-inline f-20 mt-3 mb-0">
+              <li class="list-inline-item" *ngFor="let red of persona.redes_sociales">
+                <a  class="text-facebook" target="_blank"
+                [href]= "red.red" 
+                [class]="'text-'+red.nombre | lowercase ">
+                  <i class="fab " [class]="red.icono"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+              <h6 class="mb-1">Mi perfil</h6>
+              <p class="mb-0" style="text-align: justify;">
+                  <span id="textoPerfil" [innerText]="persona.perfil ? persona.perfil :'Aquí podrás describir tu perfil. Máximo 500 caracteres'"></span>
+              </p>
+          </div>
+        </div>
+        <div class="row" *ngIf="emprendimiento">
+          <div class="col-12">
+              <h6 class="mb-1" [innerText]="emprendimiento.nombre ? emprendimiento.nombre : 'Mi Negocio'">Mi Negocio</h6>
+              <p class="mb-0" style="text-align: justify;">
+                  <span id="textoPerfil" [innerText]="emprendimiento.descripcion_emprendimiento ? emprendimiento.descripcion_emprendimiento : 'Descripción de mi negocio'"></span>
+              </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+              <h6 class="mb-1">Mis intereses</h6>
+              <span class="badge badge-light-primary mb-1" 
+                *ngFor="let interes of persona.intereses"
+                [ngStyle]="{'color': interes.color}"
+                [innerText]="interes.nombre">
+                  Medio ambiente
+              </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</app-card>

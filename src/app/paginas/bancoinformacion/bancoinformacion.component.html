@@ -1,0 +1,184 @@
+
+<div class="row btn-page ">
+  <div class="col-xl-8 col-lg-8 col-sm-7 order-md-1">
+   
+    <app-card cardTitle="Banco de Información" [options]="false">
+      <button (click) = mostrarPregEmprendedor() type="button" class="btn btn-primary" ngbTooltip="Preguntas frecuentes de los emprendedores">Información para emprendedores</button>
+      <button (click)="addToast({title:'No disponible', msg:'Esta función aun no esta disponible en el sistema', timeout: 5000, theme:'material', position:'top-right', type:'info'})" type="button" class="btn btn-warning" ngbTooltip="Preguntas frecuentes de los mentores">Información para mentores</button>
+      <!-- <button type="button" class="btn btn-success" ngbTooltip="Archivos varios">Documentos</button> -->
+      <!-- <button type="button" class="btn btn-danger" ngbTooltip="btn-danger">Danger</button>
+      <button type="button" class="btn btn-warning" ngbTooltip="btn-warning">Warning</button> -->
+      <button (click)="addToast({title:'No disponible', msg:'Esta función aun no esta disponible en el sistema', timeout: 5000, theme:'material', position:'top-right', type:'info'})" type="button" class="btn btn-info" ngbTooltip="Archivos varios">Documentos</button>
+      <!-- <button type="button" class="btn btn-light" ngbTooltip="btn-light">Light</button>
+      <button type="button" class="btn btn-dark" ngbTooltip="btn-dark">Dark</button> -->
+      <!-- <button type="button" class="btn btn-link" ngbTooltip="btn-link">Link</button> -->
+    </app-card>
+
+      
+      <ngb-accordion *ngIf=!mostrar [closeOthers]="true" activeIds="static-1" class="able-pro-accordion">
+        
+        
+        
+        <ngb-panel id="static-1">
+         
+          <ng-template ngbPanelTitle>
+            <h5><a href="javascript:">¿Que es el centro de emprendimiento?</a></h5>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <app-card [hidHeader]="true" cardClass="bg-dark text-white" blockClass="p-0">
+              <img class="card-img" src="assets/images/slider/centroemprendimiento.jpg" alt="Card image">
+              <div class="card-img-overlay">
+                <!-- <h5 class="card-title text-black">Centro de Emprendimiento</h5> -->
+                <!-- <p class="card-text">Estarás listo para romper barreras que te detienen hacia un emprendimiento sostenible y escalable.</p> -->
+                <!-- <p class="card-text">Last updated 3 mins ago</p> -->
+              </div>
+            </app-card>
+            <!-- Aquí encontrarás una comunidad de profesionales y mentores dispuestos a impulsar tu idea o emprendimiento, para convertirlo en un modelo innovador y llevarlo a un nuevo nivel, conectándote con todo lo que necesitas como emprendedor. -->
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-2">
+          <ng-template ngbPanelTitle>
+            <h5><a href="javascript:">¿De que trata la etapa Descubriendo?</a></h5>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <app-card [hidHeader]="true" cardClass="bg-dark text-white" blockClass="p-0">
+              <img class="card-img" src="assets/images/slider/Descubriendo.jpg" alt="Card image">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-white">Descubriendo</h5>
+                <!-- <p class="card-text">Estarás listo para romper barreras que te detienen hacia un emprendimiento sostenible y escalable.</p> -->
+                <!-- <p class="card-text">Last updated 3 mins ago</p> -->
+              </div>
+            </app-card>
+            <!-- Te mostraremos los pilares fundamentales del emprendimiento, conocerás las oportunidades, conexiones y soportes que te brindará el  Centro de Emprendimiento con el fin de impulsar y potencializar tu idea. -->
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-3">
+          <ng-template ngbPanelTitle>
+            <h5><a href="javascript:">¿De que trata la etapa Re-creando? </a></h5>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <app-card [hidHeader]="true" cardClass="bg-dark text-white" blockClass="p-0">
+              <img class="card-img" src="assets/images/slider/recreando.jpg" alt="Card image">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-white">Recreando</h5>
+                <!-- <p class="card-text">Estarás listo para romper barreras que te detienen hacia un emprendimiento sostenible y escalable.</p> -->
+                <!-- <p class="card-text">Last updated 3 mins ago</p> -->
+              </div>
+            </app-card>
+            <!-- Para los nuevos emprendedores este será el punto de partida en el camino del emprendimiento. En esta etapa analizaremos tu idea, su viabilidad y el modelo de negocio adecuado. -->
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-4">
+          <ng-template ngbPanelTitle>
+            <h5><a href="javascript:">¿De que trata la etapa Validando? </a></h5>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <app-card [hidHeader]="true" cardClass="bg-dark text-white" blockClass="p-0">
+              <img class="card-img" src="assets/images/slider/validando.jpg" alt="Card image">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-white">Validando</h5>
+                <!-- <p class="card-text">Estarás listo para romper barreras que te detienen hacia un emprendimiento sostenible y escalable.</p> -->
+                <!-- <p class="card-text">Last updated 3 mins ago</p> -->
+              </div>
+            </app-card>
+            <!-- Aquí obtendrás acceso a herramientas para que tu negocio sea verdaderamente innovador. Tendrás acceso especializado a la red de mentores que te guiarán en la validación de tu modelo de negocios. Accederás a capacitaciones para maximizar el potencial de tu emprendimiento a la vez que seleccionas los canales de comercialización más convenientes y de impacto. Todo esto te permitirá tener la seguridad para tocar las puertas para obtener financiamiento. -->
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-5">
+          <ng-template ngbPanelTitle>
+            <h5><a href="javascript:">¿De que trata la etapa Despegando? </a></h5>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <app-card [hidHeader]="true" cardClass="bg-dark text-white" blockClass="p-0">
+              <img class="card-img" src="assets/images/slider/despegando.jpg" alt="Card image">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-white">Despegando</h5>
+                <!-- <p class="card-text">Estarás listo para romper barreras que te detienen hacia un emprendimiento sostenible y escalable.</p> -->
+                <!-- <p class="card-text">Last updated 3 mins ago</p> -->
+              </div>
+            </app-card>
+            
+          </ng-template>
+        </ngb-panel>
+
+      
+      </ngb-accordion>
+
+  </div>
+ 
+
+  <div  *ngIf=!mostrar class="col-xl-4 col-lg-4 col-sm-5 order-md-2">
+    <div class="right-side">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5>Guías para el emprendedor</h5>
+        </div>
+        <div class="card-body p-3">
+          <div class="cat-list">
+            <div class="border-bottom pb-3 ">
+              <div class="d-inline-block">
+                <img src="assets/images/ticket/p1.jpg" alt="" class="wid-20 rounded mr-1 img-fluid">
+                <a href="assets/documents/descubriendo.pdf">Descubriendo</a>
+              </div>
+              <div class="float-right span-content">
+                <a href="javascript:" class="btn  btn-default btn-warning  mr-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="tooltip on top"> Etapa 1 </a>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="d-inline-block">
+                <img src="assets/images/ticket/p2.jpg" alt="" class="wid-20 rounded mr-1 img-fluid">
+                <a href="assets/documents/recreando.pdf">Re-creando</a>
+              </div>
+              <div class="float-right span-content">
+                <a href="javascript:" class="btn  btn-default btn-warning  mr-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="tooltip on top"> Etapa 2 </a>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="d-inline-block">
+                <img src="assets/images/ticket/p3.jpg" alt="" class="wid-20 rounded mr-1 img-fluid">
+                <a href="assets/documents/validando.pdf">Validando</a>
+              </div>
+              <div class="float-right span-content">
+                <a href="javascript:" class="btn btn-warning mr-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="tooltip on top"> Etapa 3 </a>
+
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="d-inline-block">
+                <img src="assets/images/ticket/p4.jpg" alt="" class="wid-20 rounded mr-1 img-fluid">
+                <a href="assets/documents/despegando.pdf">Despegando</a>
+              </div>
+              <div class="float-right span-content">
+                <a href="javascript:" class="btn btn-warning  mr-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="tooltip on top"> Etapa 4 </a>
+
+              </div>
+            </div>
+            <!-- <div class="pt-3">
+              <div class="d-inline-block">
+                <img src="assets/images/ticket/p5.jpg" alt="" class="wid-20 rounded mr-1 img-fluid">
+                <a href="javascript:">Archivo 4</a>
+              </div>
+              <div class="float-right span-content">
+                <a href="javascript:" class="btn btn-default badge-secondary  mr-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="tooltip on top"> Etapa 3 </a>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    
+    </div>
+    <button type="button" class="animated bounceInUp btn btn-icon btn-info" data-toggle="modal"  (click)="myLargeModalLabel.show()" ngbTooltip="Chat de ayuda"><i class="feather icon-info"></i></button>
+    <app-ui-modal #myLargeModalLabel [hideFooter]="true" [dialogClass]="'modal-lg'">
+      <div class="app-modal-header">
+        <h5 class="modal-title">Chatbot de Epico</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="myLargeModalLabel.hide()"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="app-modal-body">
+        <app-chatbot></app-chatbot> 
+      </div>
+    </app-ui-modal>
+  </div>
+</div>
+<ng2-toasty [position]="position"></ng2-toasty>
+

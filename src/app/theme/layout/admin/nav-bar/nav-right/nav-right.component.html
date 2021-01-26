@@ -1,0 +1,25 @@
+<ul class="navbar-nav ml-auto">
+  <li>
+    <div class="dropdown drp-user" [ngClass]="{'drp-user-blue': clase=='blue'}" ngbDropdown placement="auto">
+      <a href="javascript:" (click)="logout()" ngbDropdownToggle data-toggle="dropdown">
+        <i class="feather icon-log-out"></i>
+      </a>
+      <!--a href="javascript:" ngbDropdownToggle data-toggle="dropdown">
+        <i class="icon feather icon-user"></i>
+      </a-->
+      <!--div class="dropdown-menu dropdown-menu-right profile-notification" ngbDropdownMenu>
+        <div class="pro-head">
+          <img [src]="usuario.url_foto" class="img-radius" alt="User-Profile-Image">
+          <span [innerText]="usuario.getName()">John Doe</span>
+          <a href="javascript:" class="dud-logout" title="Logout" (click)="logout()">
+            <i class="feather icon-log-out"></i>
+          </a>
+        </div>
+        <ul class="pro-body">
+          <li><a href="/home" class="dropdown-item"><i class="feather icon-user"></i> Mi perfil</a></li>
+          <li><a href="javascript:" class="dropdown-item" (click)="logout()"><i class="feather icon-lock"></i> Logout</a></li>
+        </ul>
+      </div-->
+    </div>
+  </li>
+</ul>

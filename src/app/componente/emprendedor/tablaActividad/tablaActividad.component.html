@@ -1,0 +1,74 @@
+<form>
+<div class="table-responsive">
+  <table class="table table-hover mb-0">
+    <thead>
+      <tr>
+        <th style="width: 5px;"></th>
+        <th style="width: 5px;">
+          <div class="chk-option">
+            <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
+              <input type="checkbox" class="custom-control-input" [(ngModel)]="_selectTodos" [ngModelOptions]="{standalone: true}" (change)="selectAll();">
+              <span class="custom-control-label"></span>
+            </label>
+          </div>
+        </th>
+        <th>Actividad</th>
+        <th>Estado</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-act [ngForOf]="lista" let-i="index">
+      <tr *ngIf="act.visible">
+        <td style="width: 5px;">
+          <a href="javascript:" (click)="act.isCollapsed = !act.isCollapsed" *ngIf="act.child.length > 0">
+            <i class="feather " [ngClass]="{'icon-plus-square': act.isCollapsed, 'icon-minus-square': !act.isCollapsed}"></i>
+          </a>
+        </td>
+        <td style="width: 5px;">
+          <div class="chk-option">
+            <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task"
+              *ngIf="act.estado_actividad_inscripcion != 'AP' && act.id_actividad_inscripcion">
+              <input type="checkbox" class="custom-control-input" (change)="selectOne(act)" [(ngModel)]="act.selected" [ngModelOptions]="{standalone: true}">
+              <span class="custom-control-label"></span>
+            </label>
+          </div>
+        </td>
+        <td [innerText]="act.actividad">Able Pro</td>
+        <td>
+          <span class="badge badge-success" 
+            [ngClass]="{'badge-success': act.estado_actividad_inscripcion == 'AP',
+                        'badge-warning': act.estado_actividad_inscripcion == 'PE' || act.estado_actividad_inscripcion == 'IN',
+                        'badge-primary': act.estado_actividad_inscripcion == 'EP',
+                        'badge-secondary': !act.estado_actividad_inscripcion}"
+            [innerText]="act.estado_actividad">Success
+          </span>
+        </td>
+        <td>
+          <button type="button" class="btn btn-sm btn-success" (click)="_aprobarActividad(act)"
+            *ngIf="act.estado_actividad_inscripcion != 'AP' && act.id_actividad_inscripcion"
+            title="Aprobar actividad">
+            <i class="feather icon-check-square"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-danger" (click)="_revertir(act)"
+            *ngIf="act.estado_actividad_inscripcion == 'AP' && act.child.length == 0 " 
+            title="Revertir estado actividad">
+            <i class="feather icon-rotate-ccw"></i>
+          </button>
+        </td>
+      </tr>
+      <tr [ngbCollapse]="act.isCollapsed" *ngIf="act.child.length > 0" >
+        <td colspan="5">
+          <app-tablaActividad [lista]="act.child" (selectActividad)=_ejecutar_actividad($event) 
+            [_selectTodos]="act.selected" 
+            (selectTodos)="act.selected = $event;selectOne2(act);"
+            (aprobarActividad)="_aprobarActividad($event)"
+            (revertir)="_revertir($event)"
+            ></app-tablaActividad>
+        </td>
+      </tr>
+    </ng-template>
+    </tbody>
+  </table>
+</div>
+</form>

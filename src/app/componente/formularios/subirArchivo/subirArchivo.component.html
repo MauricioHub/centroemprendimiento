@@ -1,0 +1,75 @@
+<!--form id="form_archivo">
+  <div class="row">
+      <div class="col-md-12">
+          <li class="media d-flex m-b-15">
+              <div class="m-r-20 file-attach">
+                  <i class="far fa-file-pdf f-28 text-muted"></i>
+              </div>
+              <div class="media-body">
+                  <a [href]="archivoReferencia" target="_blank" class="m-b-5 d-block text-secondary">Archivo de referencia</a>
+              </div>
+              <div class="float-right text-muted">
+                  <i class="fas fa-download f-18"></i>
+              </div>
+          </li>
+          <li class="media m-b-15" 
+            *ngIf="!subirArchivo"
+            data-bind="visible: emprendedor.actividad_selecionada.archivo()">
+              <div class="m-r-20 file-attach">
+                  <i class="far fa-file-pdf f-28 text-muted"></i>
+              </div>
+              <div class="media-body">
+                  <a [href]="archivoCargado" target="_blank" class="m-b-5 d-block text-secondary">Archivo cargado</a>
+              </div>
+              <div class="float-right text-muted" onclick="descargarArchivoSubido()">
+                  <i class="fas fa-download f-18"></i>
+              </div>
+          </li>
+      </div>
+  </div>
+  <div class="row" *ngIf="subirArchivo">
+      <div class="col-md-12">
+          <app-archivo
+            [accept]="accept"
+            [maxSize]="maxSize"
+            (file)="file=$event"
+          ></app-archivo>
+      </div>
+  </div>
+  <div class="row align-items-center m-l-0">
+    <div class="col-sm-6"></div>
+    <div class="col-sm-6 text-right">
+      <button class="btn btn-success btn-sm btn-round has-ripple mr-2"
+        (click)="finalizar()">
+        <i class="feather icon-save"></i>Guardar
+      </button>
+    </div>
+  </div>
+</form-->
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Completa tu tarea" [options]="false">
+      <div class="text-center m-t-20">
+        <p>Click abajo para descargar la guía para elaborar tu modelo de negocio</p>
+        <a [href]="archivoReferencia" target="_blank" class="btn btn-warning">Descargar </a>
+      </div>
+
+      <form [formGroup]="demoForm" *ngIf="!archivoCargado">
+        <file-upload formControlName="files" 
+          [multiple]="multiple" [animation]="animation" [accept]="accept" 
+          [(ngModel)]="uploadedFiles"
+          (valueChanges)="cambio($event)">
+        </file-upload>
+      </form>
+      <div class="text-center m-t-20" *ngIf="!archivoCargado">
+        <button (click)="finalizar()" class="btn btn-primary">Sube tu tarea</button>
+      </div>
+      <div class="text-center m-t-20" *ngIf="archivoCargado">
+        <p>Ya tienes subida tu tarea</p>
+        <a [href]="archivoCargado" target="_blank" class="btn btn-warning">Descargar</a>
+      </div>
+    </app-card>
+  </div>
+</div>

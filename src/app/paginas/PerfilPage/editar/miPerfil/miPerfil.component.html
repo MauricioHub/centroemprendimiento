@@ -1,0 +1,99 @@
+<div class="row" *ngIf="!editable || !editar">
+  <div class="col-12">
+    <app-perfil [persona]="persona" [emprendimiento]="emprendimiento" [usuario]="usuario"></app-perfil>
+  </div>
+</div>
+<div class="row" *ngIf="editable && editar">
+  <div class="col-12">
+    <app-card [customHeader]="true" headerClass="border-0 p-2 pb-0" [options]="false"
+      cardClass="user-card user-card-2 shape-right" blockClass="pt-0"
+      [formGroup]="formPerfil">
+      <div class="app-card-header">
+        <div class="cover-img-block">
+          <img src="images/bannerCE.jpg" alt="" class="img-fluid">
+          <!--div class="overlay"></div>
+          <div class="change-cover">
+            <div class="dropdown" ngbDropdown placement="bottom-left">
+              <a class="drp-icon dropdown-toggle" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon feather icon-camera"></i></a>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <a class="dropdown-item" href="javascript:"><i class="feather icon-upload-cloud mr-2"></i>upload new</a>
+                <a class="dropdown-item" href="javascript:"><i class="feather icon-image mr-2"></i>from photos</a>
+                <a class="dropdown-item" href="javascript:"><i class="feather icon-film mr-2"></i> upload video</a>
+                <a class="dropdown-item" href="javascript:"><i class="feather icon-trash-2 mr-2"></i>remove</a>
+              </div>
+            </div>
+          </div-->
+        </div>
+      </div>
+      <div class="user-about-block">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="row align-items-center">
+              <div class="col-auto col pr-0">
+                <app-fotoPerfil [usuario]="usuario"></app-fotoPerfil>
+              </div>
+              <div class="col">
+                <h6 class="mb-1" [innerText]="usuario.getName()">Lary Doe</h6>
+                <input class="form-control" name="frase_perfil"
+                  placeholder="Aquí podrás ingresar una frase. (máximo 100 caracteres.)"
+                  [(ngModel)]="persona.frase_perfil"
+                  formControlName="frase_perfil"
+                  [ngClass]="{'is-invalid': getValid(formPerfil.controls.frase_perfil)}">
+                  <label id="validation-nombre-error" 
+                    *ngIf="getValid(formPerfil.controls.frase_perfil)"
+                    class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <ul class="list-inline f-20 mt-3 mb-0">
+                  <li class="list-inline-item" *ngFor="let red of persona.redes_sociales">
+                    <a class="text-facebook" target="_blank" [href]="red.red"
+                      [class]="'text-'+red.nombre | lowercase ">
+                      <i class="fab " [class]="red.icono"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <h6 class="mb-1">Mi perfil</h6>
+                <textarea rows="5" name="perfil" class="form-control" [(ngModel)]="persona.perfil"
+                  formControlName="perfil"
+                  placeholder="Aquí podrás describir tu perfil. Máximo 500 caracteres"></textarea>
+              </div>
+            </div>
+            <!--div class="row">
+              <div class="col-12">
+                  <h6 class="mb-1" [innerText]="emprendimiento.nombre ? emprendimiento.nombre : 'Mi Negocio'">Mi Negocio</h6>
+                  <p class="mb-0" style="text-align: justify;">
+                      <span id="textoPerfil" [innerText]="emprendimiento.descripcion ? emprendimiento.descripcion : 'Descripción de mi negocio'"></span>
+                  </p>
+              </div>
+            </div-->
+            <div class="row">
+              <div class="col-sm-12">
+                <!--h6 class="mb-1">Mis intereses</h6-->
+                <h5 class="sub-title">Mis intereses</h5><hr/>
+                <ng-select [ngClass]="'ng-select'" 
+                  [options]="listaEtiquetas" 
+                  [(ngModel)]="etiquetasSeleccionadas" 
+                  [multiple]="true"
+                  [ngModelOptions]="{standalone: true}"></ng-select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+          <button type="submit" class="btn btn-primary col-sm-6"
+            (click)="grabarPersona(formPerfil)">Grabar</button>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

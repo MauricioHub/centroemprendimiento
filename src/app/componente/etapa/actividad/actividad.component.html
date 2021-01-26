@@ -1,0 +1,29 @@
+<ul class="list-unstyled task-list">
+  <li *ngFor="let actividad of actividades;">
+    <i class="feather f-w-600 task-icon "
+        [class] = "getIcono(actividad)"></i>
+
+    <h6 class="text-muted">
+      <a href="javascript:" 
+        [ngClass]="{'inactiva': !actividad.estado_actividad_inscripcion}" 
+        (click)="_ejecutar_actividad(actividad);" 
+        [innerText]="actividad.actividad">Revisar</a>
+    </h6>
+    <p class="m-b-5" [innerText]="actividad.estado_actividad">link</p>
+    <!--p class="m-b-5" *ngIf="(actividad.estado_actividad_inscripcion && !(actividad.child.length > 0) && actividad.estado_actividad_inscripcion != 'AP' ) || aprobarPadre">
+      <a href="javascript:" (click)="_ejecutar_actividad(actividad);" [innerText]="textAprobar">Revisar</a>
+    </p-->
+    <p class="m-b-5" *ngIf="actividad.child.length > 0">
+      <a href="javascript:" (click)="actividad.isCollapsed = !actividad.isCollapsed">
+        Ver sub actividades
+        <i class="feather " [ngClass]="{'icon-chevron-right': actividad.isCollapsed, 'icon-chevron-down': !actividad.isCollapsed}"></i>
+      </a>
+    </p>
+    <app-actividad [actividades]="actividad.child" 
+      (ejecutar_actividad)="_ejecutar_actividad($event)" 
+      *ngIf="actividad.child.length > 0" 
+      [aprobarPadre]="aprobarPadre"
+      [textAprobar]="textAprobar"
+      [ngbCollapse]="actividad.isCollapsed"></app-actividad>
+  </li>
+</ul>

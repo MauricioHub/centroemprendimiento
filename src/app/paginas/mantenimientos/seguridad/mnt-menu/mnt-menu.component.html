@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" cardClass="user-profile-list" [options]="false">
+      <div class="row align-items-center m-l-0">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right">
+          <button class="btn btn-success btn-sm btn-round has-ripple" 
+          (click)="nuevoMenu()"><i class="feather icon-plus"></i> Nuevo</button>
+        </div>
+      </div>
+      <div class="dt-responsive table-responsive">
+        <table datatable class="table table-striped row-border table-hover"
+          #mf
+          [dtTrigger]="dtTrigger">
+          <thead>
+            <tr>
+              <th>Aplicación</th>
+              <th>Menu</th>
+              <th>Menu padre</th>
+              <th>icono</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let menu of listaMenu">
+              <td [innerText]="menu.aplicacion"></td>
+              <td [innerText]="menu.nombre"></td>
+              <td [innerText]="menu.menu_padre"></td>
+              <td [innerText]="menu.icono"></td>
+              <td>
+                <span class="badge " 
+                  [ngClass]="{'badge-success': menu.estado == 'A',
+                              'badge-danger': menu.estado == 'I'}"
+                  >{{menu.estado == 'A'?'Activo' : 'Inactivo'}}</span>
+                <div class="overlay-edit">
+                  <button type="button" class="btn btn-icon btn-success" (click)="editarMenu(menu)"><i class="feather icon-check-circle"></i></button>
+                  <button type="button" class="btn btn-icon btn-danger" (click)="eliminarMenu(menu)"><i class="feather icon-trash-2"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Aplicación</th>
+              <th>Menu</th>
+              <th>Menu padre</th>
+              <th>icono</th>
+              <th>Estado</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </app-card>
+
+    <app-ui-modal [dialogClass]="'modal-lg'" #menuModal>
+      <div class="app-modal-header">
+        <h5 class="modal-title" [innerText]="menu.nombre">Modal Title</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" 
+        (click)="menuModal.hide()"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="app-modal-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nombre</label>
+              <input type="text" class="form-control" id="Name" placeholder="Nombre" [(ngModel)]="menu.nombre">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Estado</label>
+              <select class="form-control" 
+                name="estado" 
+                [(ngModel)]="menu.estado"
+                placeholder="Menu padre">
+                <option value="A">Activo</option>
+                <option value="I">Inactivo</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Aplicación</label>
+              <select class="form-control" 
+                name="estado" 
+                [(ngModel)]="menu.id_aplicacion"
+                (change)="calcularOrden()">
+                <option value="">Seleccione</option>
+                <option *ngFor="let item of listaAplicaciones" [value]="item.id" [innerText]="item.nombre"></option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Menu padre</label>
+              <select class="form-control" 
+                name="etapa_emprendimiento" 
+                [(ngModel)]="menu.id_menu_padre"
+                placeholder="Menu padre"
+                (change)="calcularOrden()">
+                <option>Seleccione</option>
+                <option *ngFor="let item of getMenusPadre()" [value]="item.id_menu" [innerText]="item.nombre"></option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Url</label>
+              <input type="text" class="form-control" id="Name" placeholder="Nombre" [(ngModel)]="menu.url">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Orden</label>
+              <input type="number" class="form-control" placeholder="Orden" [(ngModel)]="menu.orden">
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Icono</label>
+              <input type="text" class="form-control" placeholder="Icono" [(ngModel)]="menu.icono">
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="app-modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="menuModal.hide()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="grabarMenu()">Grabar</button>
+      </div>
+    </app-ui-modal>
+  </div>
+</div>

@@ -1,0 +1,269 @@
+<div class="row align-items-center m-l-0">
+  <div class="col-sm-6"></div>
+  <div class="col-sm-6 text-right">
+    <button class="btn btn-warning btn-sm btn-round has-ripple mr-2" (click)="_cancelar()">
+      <i class="feather icon-save"></i>Cancelar
+    </button>
+    <button class="btn btn-success btn-sm btn-round has-ripple mr-2" (click)="grabar()">
+      <i class="feather icon-save"></i>Guardar
+    </button>
+  </div>
+</div>
+
+<div class="app-card-footer">
+  <div class="row align-items-center">
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Programa</label>
+        <select class="form-control" required [(ngModel)]="idPrograma" placeholder="Seleccione" (change)="consultarSubProgramas()" [disabled]="!editarCabecera">
+          <option *ngFor="let item of listaProgramas" [value]="item.id" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Sub programa</label>
+        <select class="form-control" required [(ngModel)]="idSubPrograma" placeholder="Seleccione" (change)="consultarEtapas()" [disabled]="!editarCabecera">
+          <option *ngFor="let item of listaSubPrograma" [value]="item.id" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Etapa</label>
+        <select class="form-control" required [(ngModel)]="actividad.id_etapa" placeholder="Seleccione" (change)="consultarActividades();">
+          <option>Seleccione</option>
+          <option *ngFor="let item of listaEtapas" [value]="item.id" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Nombre actividad</label>
+        <input type="text" class="form-control" required placeholder="Nombre actividad" [(ngModel)]="actividad.nombre">
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Orden</label>
+        <input type="text" class="form-control" required placeholder="Orden" readonly [(ngModel)]="actividad.orden">
+        <p class="m-t-10">Puede cambiar el orden ingresando a la etapa opcion Ordenar actividades</p>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Tipo actividad</label>
+        <select class="form-control" required [(ngModel)]="actividad.id_tipo_actividad" placeholder="Seleccione" (change)="completeCamposTA()">
+          <option>Seleccione</option>
+          <option *ngFor="let item of listaTipoActividad" [value]="item.id" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Tipo ejecucion</label>
+        <select class="form-control" required [(ngModel)]="actividad.id_tipo_ejecucion" placeholder="Seleccione">
+          <option>Seleccione</option>
+          <option *ngFor="let item of listaTipoEjecucion" [value]="item.id" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-6" *ngIf="actividad.id_tipo_actividad == 11">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Rubrica calificacion</label>
+        <select class="form-control" required [(ngModel)]="actividad.id_rubrica" placeholder="Seleccione">
+          <option>Seleccione</option>
+          <option *ngFor="let item of listaRubricas" [value]="item.id" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6" *ngIf="actividad.id_tipo_ejecucion == 1">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Componente</label>
+        <input type="text" class="form-control" placeholder="Componente angular"
+          [(ngModel)]="actividad.componente">
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center" *ngIf="actividad.id_tipo_ejecucion == 6">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Tipo de archivo</label>
+        <select class="form-control" required [(ngModel)]="actividad.nemonico_file" placeholder="Seleccione">
+          <option>Seleccione</option>
+          <option *ngFor="let item of listaArchivosNemonico" [value]="item.nemonico" [innerText]="item.nemonico"></option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <app-archivo [title]="'Archivo de guía'" [url]="actividad.url_archivo" [vistaPrevia]="true" (file)="archivoFile=$event;" [accept]="'.pdf'"></app-archivo>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Estado</label>
+        <select class="form-control" name="emprendimiento_formalizado" required placeholder="Seleccione"
+          [(ngModel)]="actividad.estado">
+          <option>Seleccione</option>
+          <option value="A">Activo</option>
+          <option value="I">Inactivo</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Actividad igual</label>
+        <select class="form-control" required [(ngModel)]="actividad.actividad_igual" placeholder="Seleccione">
+          <option>Seleccione</option>
+          <option *ngFor="let item of listaActividadesT" [value]="item.id" [innerText]="item.actividad"></option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center" *ngIf="actividad.id_tipo_actividad == 2">
+    <div class="col-sm-4" >
+      <div class="form-group mb-3">
+        <label class="form-control-label">Aplicación externa</label>
+        <select class="form-control" required [(ngModel)]="actividad.cod_aplicacion_externa" placeholder="Seleccione">
+          <option>Seleccione</option>
+          <option *ngFor="let item of listaAplicacionExterna" [value]="item.codigo" [innerText]="item.nombre"></option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Codigo de Aplicación externa</label>
+        <input type="text" class="form-control" required uppercase placeholder="Nombre actividad"
+          [(ngModel)]="actividad.cod_referencia">
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Codigo de trama</label>
+        <input type="text" class="form-control" placeholder="Codigo de trama configurado"
+          [(ngModel)]="actividad.cod_trama">
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Metodo API</label>
+        <input type="text" class="form-control" placeholder="Metodo del API"
+          [(ngModel)]="actividad.metodo_api">
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center" *ngIf="actividad.id_tipo_actividad == 12">
+    <div class="col-sm-6">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Codigo del taller</label>
+        <div class="input-group mb-3">
+          <select class="form-control" [(ngModel)]="actividad.cod_referencia">
+            <option>Seleccione</option>
+            <option *ngFor="let item of listaTalleres" [value]="item.codigo" [innerText]="item.codigo + ' - ' +item.nombre"></option>
+          </select>
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" (click)="nuevoTaller=true;"><i class="feather icon-plus-circle"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Boton guardar</label>
+        <select class="form-control" name="emprendimiento_formalizado" required placeholder="Seleccione"
+          [(ngModel)]="actividad.boton_guardar">
+          <option value="SI">SI</option>
+          <option value="NO">NO</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Boton finalizar</label>
+        <select class="form-control" required placeholder="Seleccione"
+          [(ngModel)]="actividad.boton_finalizar">
+          <option value="SI">SI</option>
+          <option value="NO">NO</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Aprueba etapa</label>
+        <select class="form-control" required placeholder="Seleccione"
+          [(ngModel)]="actividad.aprueba_etapa">
+          <option value="SI">SI</option>
+          <option value="NO">NO</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center" *ngIf="actividad.id_tipo_ejecucion != 9">
+    <div class="col-sm-12">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Url</label>
+        <input type="text" class="form-control" required placeholder="Url"
+          [(ngModel)]="actividad.url">
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center" *ngIf="listaActividadesI">
+    <div class="col-sm-12">
+      <!--h6 class="mb-1">Mis intereses</h6-->
+      <h5 class="sub-title">Actividad en paralelo</h5><hr/>
+      <ng-select [ngClass]="'ng-select'" 
+        [options]="listaActividadesI" 
+        [(ngModel)]="actividadesParalelo" 
+        [multiple]="true"
+        [ngModelOptions]="{standalone: true}"></ng-select>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <app-archivo [title]="'Banner'" [url]="actividad.url_banner" [accept]="'image.*'" [vistaPrevia]="true" (file)="bannerFile=$event;"></app-archivo>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <app-archivo [title]="'Logo'" [url]="actividad.url_logo" [accept]="'image.*'" [vistaPrevia]="true" (file)="logoFile=$event;"></app-archivo>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <app-archivo [title]="'Icono'" [url]="actividad.url_icono" [accept]="'image.*'" [vistaPrevia]="true" (file)="iconoFile=$event;"></app-archivo>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center" *ngIf="listaActividadesI">
+    <div class="col-sm-12">
+      <h5 class="sub-title">Estados personalizados</h5><hr/>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Inhabilitado</label>
+        <input type="text" class="form-control" placeholder="Texto en estado inhabilitado"
+          [(ngModel)]="actividad.mensaje_estado_ina">
+      </div>
+    </div>
+    <div class="col-sm-4" *ngFor="let estado_act of actividad.listaMensajes">
+      <div class="form-group mb-3">
+        <label class="form-control-label" [innerText]="estado_act.nombre + ' ('+ estado_act.estado +')'">Inhabilitado</label>
+        <input type="text" class="form-control" placeholder="Texto en estado inhabilitado"
+          [(ngModel)]="estado_act.texto_mensaje">
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="nuevoTaller">
+  <app-evento [isHorario]="false" (getEvento)="setEvento($event)" (cancelar)="cancelarTaller($event)"></app-evento>
+</div>

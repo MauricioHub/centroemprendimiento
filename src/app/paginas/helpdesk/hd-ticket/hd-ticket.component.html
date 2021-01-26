@@ -1,0 +1,61 @@
+<div class="row help-desk">
+  <div class="col-sm-12">
+    <div class="card shadow-none">
+      <div class="card-body shadow border-0">
+        <form>
+          <div class="form-group">
+            <label>Tipo Ticket</label>
+            <select title="Types" name="type" class="mb-3 form-control"
+                    id="inputGroupSelect01"
+                    [(ngModel)]="selectedTicketType" 
+                    name="selectedT"
+                    (change)="onSelectionTypeChange(selectedTicketType)">
+                <option *ngFor="let t of ticketTypeLst" 
+                        [ngValue]="t">{{t.nombre}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Categoria</label>
+            <select title="Category" name="category" class="mb-3 form-control"
+                    id="inputGroupSelect01"
+                    [(ngModel)]="selectedCategory" 
+                    name="selectedC"
+                    (change)="onSelectionCategoryChange(selectedCategory)">
+                <option *ngFor="let c of categoryLst" 
+                        [ngValue]="c">{{c.nombre}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Sub categoria</label>
+            <select title="Subcategory" name="subcategory" class="mb-3 form-control"
+                    id="inputGroupSelect01"
+                    [(ngModel)]="selectedSubcategory" 
+                    name="selectedS"
+                    (change)="onSelectionSubcategoryChange(selectedSubcategory)">
+                <option *ngFor="let c of subcategoryLst" 
+                        [ngValue]="c">{{c.nombre}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Descripcion</label>
+            <input type="text" class="form-control" 
+            name="exampleInputPassword1" 
+            id="exampleInputPassword1"
+            [(ngModel)]="ticket.descripcion" 
+            placeholder="Descripcion">
+          </div>
+          <!--<div class="form-group">
+            <label for="exampleInputPassword1">Description</label>
+            <app-tinymce [(ngModel)]='basicContent' #tinymce='tinymce' name="tinymce"></app-tinymce>
+            <div class="file btn btn-outline-primary mt-3 file-btn">
+              <i class="feather icon-paperclip"></i>Add Atachment
+              <input type="file" name="file" />
+            </div>
+          </div>-->
+          <button type="submit" class="btn btn-primary"
+                  (click)="grabarTicket()">Crear Ticket</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

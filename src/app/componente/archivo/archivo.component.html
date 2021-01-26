@@ -1,0 +1,17 @@
+<div class="form-group form-group-sm">
+  <label [innerText]="title">Adjuntar archivo</label>
+  <input type="file" class="form-control uploadFile" 
+    required [name]="id" 
+    [id]="id" 
+    [attr.data-output-name]="'info'+id"
+    style='display: none;' [accept]="accept" (change)="validarArchivo($event)"
+    data-bind="attr: {'accept': emprendedor.actividad_selecionada.mimetype()}">
+  <label class="form-control" [for]="id" #outputFile>
+    <div [id]="'info'+id">
+      <i class="glyphicon glyphicon-upload"></i> Subir archivo
+    </div>
+  </label>
+</div>
+<div [id]="'outputfile'+id" *ngIf="vistaPrevia" [ngClass]="{'archivo': isFile}">
+
+</div>

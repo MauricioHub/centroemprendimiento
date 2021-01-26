@@ -1,0 +1,295 @@
+<div *ngIf="persona">
+  <app-editar [persona]='persona' [usuario]="usuario" [editablePerfil]="false" [activeTab]="activeTab"
+    (setActiveTab)="this.activeTab = $event">
+    <div class="app-option-perfil">
+      <li class="nav-item">
+        <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'actividades'}"
+          (click)="this.activeTab = 'actividades'" id="mp-act" data-toggle="tab" href="javascript:" role="tab"
+          aria-controls="actividades" aria-selected="true"><i class="feather icon-user mr-2"></i>Actividades</a>
+      </li>
+    </div>
+    <div class="app-content-option-perfil">
+      <div class="tab-pane fade" [ngClass]="{'show active': this.activeTab === 'actividades'}" role="tabpanel"
+        aria-labelledby="mp-act">
+        <div class="row align-items-center m-l-0">
+          <div class="col-sm-12" *ngIf="programa && this.activeTab === 'actividades'">
+            <app-card [options]="false" cardTitle="{{programa.sub_programa.sub_programa}}">
+              <div class="row">
+                <div class="col-sm-4 text-right order-md-2">
+                  <app-card *ngIf="programa" [hidHeader]="true" [options]="false"
+                    cardTitle="{{programa.sub_programa.sub_programa}}" captionClass="mb-0 text-muted" cardClass="mb-0"
+                    blockClass="p-0">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: center;"
+                          *ngFor="let etapa of programa.etapas; index as j;">
+                          <div class="thumbnail">
+                            <div class="thumb">
+                              <p class="img-fluid img-thumbnail ballon-btn"
+                                *ngIf="programa.sub_programa.fase == etapa.id_etapa"
+                                [ngClass]="{'balloon': programa.sub_programa.fase == etapa.id_etapa}">
+                                Aquí
+                              </p>
+                              <p class="ballon-btn" style="font-size: 20px;"
+                                *ngIf="programa.sub_programa.fase != etapa.id_etapa">&nbsp;
+                              </p>
+                            </div>
+                          </div>
+                          <div class="thumbnail">
+                            <div class="thumb" (click)="openEtapa(etapa)">
+                              <span class="etapa" [innerText]="'Etapa '+(j+1)">Etapa 1</span><br>
+                              <img [src]="etapa.url_logo" alt="" class="img-fluid img-thumbnail2"
+                                style="background-color: white;">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </app-card>
+                </div>
+                <div class="col-sm-8 order-md-1">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group mb-3">
+                        <label class="form-control-label">Etapa Actual</label>
+                        <input class="form-control" [(ngModel)]="etapaActual.etapa" readonly>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group mb-3">
+                        <label class="form-control-label">Asignar a otra etapa</label>
+                        <select class="form-control obligatorio" [(ngModel)]="id_etapa_new">
+                          <option *ngFor="let item of listaEtapa" [value]="item.id" [innerText]="item.nombre"></option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="btn-group" role="group" aria-label="button groups">
+                        <button class="btn btn-success btn-sm" (click)="aprobarEtapa()">Aprobar etapa actual</button>
+                        <button class="btn btn-warning btn-sm" (click)="aprobarActividades()">Aprobar actividades</button>
+                        <button class="btn btn-info btn-sm" (click)="cambiarEtapa()">Cambiar etapa</button>
+                        <button class="btn btn-secondary btn-sm" (click)="asignarActividades()">Asignar actividad</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="order-md-1 col-md-12">
+                  <div class="merge-card">
+                    <app-card [hidHeader]="true" cardClass="mb-0" [options]="false">
+                      <div class="row align-items-center m-l-0">
+                        <div class="col-sm-8">
+                          <a href="javascript:" class="text-h-primary">
+                            <h6 [innerText]="programa.emprendimiento.nombre">The new Lorem Ipsum is simply</h6>
+                          </a>
+                        </div>
+                        <div class="col-sm-4 text-right">
+                          <div class="form-group form-group-sm mb-3">
+                            <select class="form-control" [(ngModel)]="id_etapa" (change)="consultarProgramaInscrito()">
+                              <option value="">Seleccione</option>
+                              <option *ngFor="let item of listaEtapa" [value]="item.id" [innerText]="item.nombre">
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row align-items-center m-l-0">
+                        <div class="col-sm-12">
+                          <p class="alert alert-info mb-0"
+                            [innerText]="programa.emprendimiento?programa.emprendimiento.descripcion_emprendimiento:''">
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row m-l-0 m-r-0">
+                        <div class="col-sm-12 col-lg-12 col-md-12 col-xl-12">
+                          <div>
+                            <ul class="nav nav-tabs profile-tabs nav-fill" id="myTab" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link text-reset"
+                                  [ngClass]="{'active': this.activeTabPrograma === 'todos'}"
+                                  (click)="_setActiveTab('todos')" id="dt-tab" data-toggle="tab" href="javascript:"
+                                  role="tab" aria-controls="home" aria-selected="true"><i
+                                    class="feather icon-home mr-2"></i>Todos</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link text-reset"
+                                  [ngClass]="{'active': this.activeTabPrograma === 'actividades'}"
+                                  (click)="_setActiveTab('actividades')" id="rs-tab" data-toggle="tab"
+                                  href="javascript:" role="tab" aria-controls="home" aria-selected="true"><i
+                                    class="feather icon-user mr-2"></i>Actividades</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link text-reset"
+                                  [ngClass]="{'active': this.activeTabPrograma === 'modulos'}"
+                                  (click)="_setActiveTab('modulos')" id="mp-tab" data-toggle="tab" href="javascript:"
+                                  role="tab" aria-controls="home" aria-selected="true"><i
+                                    class="feather icon-user mr-2"></i>Modulos</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link text-reset"
+                                  [ngClass]="{'active': this.activeTabPrograma === 'taller'}"
+                                  (click)="_setActiveTab('taller')" id="mp-tab" data-toggle="tab" href="javascript:"
+                                  role="tab" aria-controls="home" aria-selected="true"><i
+                                    class="feather icon-user mr-2"></i>Talleres</a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="tab-content" id="myTabContent" *ngIf="persona">
+                                <div class="tab-pane fade"
+                                  [ngClass]="{'show active': this.activeTabPrograma === 'todos'}" role="tabpanel"
+                                  aria-labelledby="dt-tab">
+                                  <app-tablaActividad [lista]="getActividades(programa.actividades, -1)"
+                                    (aprobarActividad)="aprobarActividad($event)"
+                                    (revertir)="revertirActividad($event)"
+                                    *ngIf="this.activeTabPrograma === 'todos'"></app-tablaActividad>
+                                </div>
+
+                                <div class="tab-pane fade"
+                                  [ngClass]="{'show active': this.activeTabPrograma === 'actividades'}" role="tabpanel"
+                                  aria-labelledby="rs-tab">
+                                  <app-card cardTitle="Actividades" cardClass="table-card" blockClass="p-0" [options]="false">
+                                    <app-tablaActividad [lista]="getActividades(programa.actividades, 0)"
+                                      (aprobarActividad)="aprobarActividad($event)"
+                                      (revertir)="revertirActividad($event)"
+                                      *ngIf="this.activeTabPrograma === 'actividades'"></app-tablaActividad>
+                                  </app-card>
+                                </div>
+
+                                <div class="tab-pane fade"
+                                  [ngClass]="{'show active': this.activeTabPrograma === 'modulos'}" role="tabpanel"
+                                  aria-labelledby="mp-tab">
+                                  <app-card cardTitle="Actividades" cardClass="table-card" blockClass="p-0" [options]="false">
+                                    <app-tablaActividad [lista]="getActividades(programa.actividades, 2)"
+                                      (aprobarActividad)="aprobarActividad($event)"
+                                      (revertir)="revertirActividad($event)"
+                                      *ngIf="this.activeTabPrograma === 'modulos'"></app-tablaActividad>
+                                  </app-card>
+                                </div>
+
+                                <div class="tab-pane fade"
+                                  [ngClass]="{'show active': this.activeTabPrograma === 'taller'}" role="tabpanel"
+                                  aria-labelledby="mp-tab">
+                                  <app-card cardTitle="Actividades" cardClass="table-card" blockClass="p-0" [options]="false">
+                                    <app-tablaActividad [lista]="getActividades(programa.actividades, 12)"
+                                      (aprobarActividad)="aprobarActividad($event)"
+                                      (revertir)="revertirActividad($event)"
+                                      *ngIf="this.activeTabPrograma === 'taller'"></app-tablaActividad>
+                                  </app-card>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </app-card>
+                  </div>
+                </div>
+              </div>
+            </app-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-editar>
+</div>
+
+<!--app-ui-modal #asignarActividad [dialogClass]="'modal-lg'">
+  <div class="app-modal-header">
+    <h5 class="modal-title">Asignar actividad (Esta en elaboracion)</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="asignarActividad.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <div class="row">
+      <div class="col-6" *ngIf="listaActividadesNew">
+        <app-card cardTitle="Actividades por etapa" cardClass="table-card" blockClass="p-0" [options]="false">
+          <app-asignarActividad [listaActividad]="listaActividadesNew"></app-asignarActividad>
+        </app-card>
+      </div>
+      <div class="col-6" *ngIf="listaActividades">
+        <app-card cardTitle="Actividades de la etapa" cardClass="table-card" blockClass="p-0" [options]="false">
+          <app-asignarActividad [listaActividad]="listaActividades" (getData)="listaActividadesS = $event.data;"></app-asignarActividad>
+        </app-card>
+      </div>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button class="btn btn-sm btn-success" (click)="grabarAsignacion()">Grabar</button>
+  </div>
+</app-ui-modal-->
+
+<app-ui-modal #asignarActividad [dialogClass]="'modal-lg'" [static]="true">
+  <div class="app-modal-header">
+    <h5 class="modal-title">Asignación de nuevas actividades</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="asignarActividad.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <app-card cardTitle="Left Nav Wizard" [options]="false" [hidHeader]="true">
+      <aw-wizard #wizard class="arc-wizard" navBarLocation="left">
+        <aw-wizard-step stepTitle="Asignadas">
+          <div class="row">
+            <div class="col-sm-12" *ngIf="listaActividadesAsignadas">
+              <h5>Actividades asignadas</h5>
+              <hr>
+              <app-asignarActividad [listaActividad]="listaActividadesAsignadas" (getData)="listaActividadesS = $event.data;"></app-asignarActividad>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-primary btn-sm" awNextStep>Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+        <aw-wizard-step stepTitle="Asignar">
+          <div class="row">
+            <div class="col-sm-12" *ngIf="listaActividadesNew">
+              <h5>Actividades para asignar</h5>
+              <hr>
+              <app-TreeChecklistExample [data]="listaActividadesNew" #treeMenu (setLista)="setActividades($event)"></app-TreeChecklistExample>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-secondary btn-sm" awPreviousStep>Atrás</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="unirActividades()">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+        <aw-wizard-step stepTitle="Ordenar">
+          <div class="row">
+            <div class="col-sm-12" *ngIf="listaActividadesOrden">
+              <h5>Ordenar flujo de nuevas actividades</h5>
+              <hr>
+              <ejs-treeview id='treeelement' [fields]='field' [allowMultiSelection]='true'
+                  (dataSourceChanged)="getOrden($event)"
+                  [allowDragAndDrop]='true'></ejs-treeview>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-secondary btn-sm" awPreviousStep>Atrás</button>
+                <button type="button" class="btn btn-success btn-sm" (click)="grabarAsignacion()">Finalizar</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+      </aw-wizard>
+    </app-card>    
+    <!--div class="row">
+      <div class="col-8" *ngIf="listaActividadesNew">
+        <app-card cardTitle="Actividades del programa" cardClass="table-card" blockClass="p-0" [options]="false">
+          <app-TreeChecklistExample [data]="listaActividadesNew" #treeMenu (setLista)="setActividades($event)"></app-TreeChecklistExample>
+        </app-card>
+      </div>
+      <div class="col-4" *ngIf="listaActividades">
+        <app-card cardTitle="Actividades del emprendedor" cardClass="table-card" blockClass="p-0" [options]="false">
+          <app-asignarActividad [listaActividad]="listaActividades" (getData)="listaActividadesS = $event.data;"></app-asignarActividad>
+        </app-card>
+      </div>
+    </div-->
+  </div>
+  <!--div class="app-modal-footer">
+    <button class="btn btn-sm btn-success" (click)="grabarAsignacion()">Grabar</button>
+  </div-->
+</app-ui-modal>

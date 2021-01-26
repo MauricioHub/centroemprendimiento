@@ -1,0 +1,53 @@
+.modal-body {
+  background-color: #F7B619 !important;
+}
+
+.img-negro {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.bg-c-gris {
+  background-color: #6c757dc9;
+}
+
+.inactiva {
+  color: #8D949B;
+}
+
+.task-list {
+  li {
+    margin-bottom: 30px;
+    padding-left: 30px;
+    position: relative;
+
+    .task-icon {
+      position: absolute;
+      left: -19px !important;
+      top: 1px;
+      border-radius: 40%;
+      padding: 13px;
+      color: #fff;
+      min-width: 30px !important;
+      min-height: 30px !important;
+      z-index: 2;
+
+    }
+  }
+}
+
+.list-unstyled {
+  padding-left: 10px !important;
+  list-style: none;
+}
+
+/*.task-list:after {
+    content: "";
+    position: absolute;
+    background: #e2e5e8;
+    height: 100%;
+    width: 2px;
+    top: 0;
+    left: 1px;
+    z-index: 1;
+}*/

@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" cardClass="user-profile-list" [options]="false">
+      <div class="row align-items-center m-l-0">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right">
+          <button class="btn btn-success btn-sm btn-round has-ripple" (click)="nuevo()"><i
+              class="feather icon-plus"></i> Nuevo
+          </button>
+        </div>
+      </div>
+      <div class="dt-responsive table-responsive">
+        <table datatable class="table table-striped row-border table-hover" [dtTrigger]="dtTrigger">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Evento</th>
+              <th>Tipo evento</th>
+              <th>Codigo referencia</th>
+              <th>color</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of lista">
+              <td [innerText]="item.id"></td>
+              <td [innerText]="item.nombre"></td>
+              <td [innerText]="item.tipo_evento"></td>
+              <td [innerText]="item.codigo"></td>
+              <td [innerText]="item.color"></td>
+              <td>
+                <span class="badge "
+                  [ngClass]="{'badge-success': item.estado == 'A',
+                                'badge-danger': item.estado == 'I'}">{{item.estado == 'A'?'Activo' : 'Inactivo'}}</span>
+                <div class="overlay-edit">
+                  <button type="button" class="btn btn-icon btn-success" (click)="editar(item)"><i class="feather icon-check-circle"></i></button>
+                  <button type="button" class="btn btn-icon btn-danger" (click)="eliminar(item)"><i class="feather icon-trash-2"></i></button>
+                  <button type="button" class="btn btn-icon btn-warning" (click)="horarios(item)"><i class="feather icon-calendar"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div *ngIf="registro">
+  <app-evento [registro]="registro" [isHorario]="isHorario" (getEvento)="setEvento($event)" (cancelar)="cancelar($event)"></app-evento>
+</div>
+
+<app-ui-modal [dialogClass]="'modal-lg'" #horarioModal [static]="true">
+  <div class="app-modal-header" *ngIf="eventoPadre">
+    <h5 class="modal-title" [innerText]="eventoPadre.nombre">Modal Title</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="horarioModal.hide(); registro=null;"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body" *ngIf="eventoPadre">
+    <div class="row">
+      <div class="col-sm-6">
+      </div>
+      <div class="col-sm-6 text-right">
+        <button class="btn btn-sm btn-info " (click)="nuevoHorario()">Agregar horario</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="dt-responsive table-responsive">
+          <table class="table table-striped row-border table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Evento</th>
+                <th>Fecha</th>
+                <th>Horario</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of listaHorarios">
+                <td [innerText]="item.id"></td>
+                <td [innerText]="item.nombre"></td>
+                <td [innerText]="item.fecha"></td>
+                <td [innerText]="item.hora_inicio + ' - ' + item.hora_fin"></td>
+                <td>
+                  <span class="badge "
+                    [ngClass]="{'badge-success': item.estado == 'A',
+                                  'badge-danger': item.estado == 'I'}">{{item.estado == 'A'?'Activo' : 'Inactivo'}}</span>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-icon btn-danger" (click)="eliminar(item)"><i class="feather icon-trash-2"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-ui-modal>

@@ -1,0 +1,249 @@
+<div class="row help-desk" [ngClass]="">
+  <div class="col-xl-8 col-lg-12 filter-bar">
+
+    <div class="card">
+      <div class="card-body">
+        <nav class="navbar justify-content-between p-0 align-items-center">
+          <h5>Historial de Tickets</h5>
+        </nav>
+      </div>
+    </div>
+
+    <table>
+      <tr *ngFor="let ticket of ticketLst">
+        <td>
+          <div class="ticket-block">
+            <div class="row">
+              <div class="col-auto">
+                <img class="media-object wid-60 img-radius" [src]="usuario.url_foto" (error)="pictNotLoading($event)" alt="Generic placeholder image ">
+              </div>
+              <div class="col">
+                <div class="card hd-body">
+                  <div class="row align-items-center">
+                    <div class="col border-right pr-0">
+                      <div class="card-body inner-center">
+                        <div class="ticket-customer font-weight-bold">{{ ticket.nombre_usuario_creacion.split(" ")[0] + " " + ticket.apellido_usuario_creacion.split(" ")[0] }}</div>
+                        <div class="ticket-type-icon private mt-1 mb-1"><i class="feather icon-lock mr-1 f-14"></i>{{ getCategoryName(ticket.categoria) + ": " + getSubcategoryName(ticket.subcategoria) }}</div>
+                        <ul class="list-inline mt-2 mb-0">
+                          <li class="list-inline-item"><img src='{{ "assets/images/ticket/" + getStatusImage(ticket.ticket_estado) + ".jpg" }}' alt="" class="wid-20 rounded mr-1 img-fluid">{{ ticket.ticket_estado }}</li>
+                          <li class="list-inline-item"><img [src]="ticket.foto_usuario_atencion" (error)="pictNotLoading($event)" alt="" class="wid-20 rounded mr-1 img-fluid">Asignado a {{ getAssignedUser(ticket) }}</li>
+                          <li class="list-inline-item"><i class="feather icon-calendar mr-1 f-14"></i>Actualizado {{ getLastDate(ticket) }}</li>
+                        </ul>
+                        <div class="excerpt mt-4">
+                          <h6><img [src]="ticket.foto_usuario_creacion" (error)="pictNotLoading($event)" alt="" class="wid-20 avatar mr-2 rounded">Comentario de <a href="javascript:">{{ ticket.nombre_usuario_creacion + " " + ticket.apellido_usuario_creacion}}</a></h6>
+                          <h6>E-mail: <a href="javascript:">{{ ticket.email_usuario_creacion }}</a></h6>                              
+                          <p>{{ getDescriptionName(ticket.descripcion) }}</p>
+                        </div>
+                        <div class="mt-2">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-auto pl-0 right-icon">
+                      <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                          <li><a href="javascript:" data-toggle="tooltip" data-placement="top" title="" data-original-title="tooltip on top" class="active"><i class="feather icon-star text-warning"></i></a></li>
+                          <li><a href="javascript:" data-toggle="tooltip" data-placement="top" title="" data-original-title="tooltip on top"><i class="feather icon-circle text-muted"></i></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-auto hover-blk position-absolute shadow-sm rounded" *ngIf="ticket.ticket_estado=='Resuelto' || ticket.ticket_estado=='Rechazado'">
+                      <div class="card-body p-0 pt-2">
+                        <div class="img-txt">
+                          <img src="images/user.png" alt="" class="wid-20 rounded mr-1 img-fluid">
+                          <p>Mesa Servicio respondi&oacute;</p>
+                        </div>
+                        <p>{{ (ticket.observacion === null)? "" : ticket.observacion }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="card shadow-none">
+      <div class="card-body shadow">
+        <div class="pagination-block text-center">
+          <nav aria-label="Page navigation example" class="d-inline-block">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="javascript:">Previous</a></li>
+              <li class="page-item"><a class="page-link" href="javascript:">1</a></li>
+              <li class="page-item"><a class="page-link" href="javascript:">2</a></li>
+              <li class="page-item"><a class="page-link" href="javascript:">3</a></li>
+              <li class="page-item"><a class="page-link" href="javascript:">Able Pro</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-4 col-lg-12">
+    <div class="right-side">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5>Busqueda de Tickets</h5>
+        </div>
+        <div class="card-body p-3">
+          <div class="cat-list">
+            <div class="border-bottom pb-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a href="javascript:">Tipo Ticket</a>
+                </div>
+                <div class="col-sm-8">
+                  <div class="input-group">
+                    <select title="Types" name="type" class="mb-3 form-control"
+                            id="inputGroupSelect01"
+                            [(ngModel)]="selectedTicketType" 
+                            name="selectedT"
+                            (change)="onSelectionTypeChange(selectedTicketType)">
+                        <option *ngFor="let t of ticketTypeLst" 
+                                [ngValue]="t">{{t.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a href="javascript:">Estado</a>
+                </div>
+                <div class="col-sm-8">
+                  <div class="input-group">
+                    <select title="Status" name="status" class="mb-3 form-control"
+                            id="inputGroupSelect02"
+                            [(ngModel)]="selectedStatus" 
+                            name="selectedC"
+                            (change)="onSelectionStatusChange(selectedStatus)">
+                        <option *ngFor="let c of statusLst" 
+                                [ngValue]="c">{{c.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a href="javascript:">Categoria</a>
+                </div>
+                <div class="col-sm-8">
+                  <div class="input-group">
+                    <select title="Category" name="category" class="mb-3 form-control"
+                            id="inputGroupSelect03"
+                            [(ngModel)]="selectedCategory" 
+                            name="selectedC"
+                            (change)="onSelectionCategoryChange(selectedCategory)">
+                        <option *ngFor="let c of categoryLst" 
+                                [ngValue]="c">{{c.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a href="javascript:">Subctgoria</a>
+                </div>
+                <div class="col-sm-8">
+                  <div class="input-group">
+                    <select title="Subcategory" name="subcategory" class="mb-3 form-control"
+                            id="inputGroupSelect04"
+                            [(ngModel)]="selectedSubcategory" 
+                            name="selectedS"
+                            (change)="onSelectionSubcategoryChange(selectedSubcategory)">
+                        <option *ngFor="let c of subcategoryLst" 
+                                [ngValue]="c">{{c.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a href="javascript:">Tipo usuario</a>
+                </div>
+                <div class="col-sm-8">
+                  <div class="input-group">
+                    <select title="Types" name="type" class="mb-3 form-control"
+                            id="inputGroupSelect05"
+                            [(ngModel)]="selectedProfile" 
+                            name="selectedPro"
+                            (change)="onSelectionProfileChange(selectedProfile)">
+                        <option *ngFor="let p of profileLst" 
+                                [ngValue]="p">{{p.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a href="javascript:">nombres</a>
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" 
+                          class="form-control" 
+                          name="usuarioCreo" 
+                          id="usuarioCreo"
+                          [(ngModel)]="ticketSearch.nombre_usuario_creacion"
+                          (ngModelChange)="entrepreneurBrowse($event)" 
+                          placeholder="nombre/apellido">
+                </div>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a href="javascript:">Fecha Ini</a>
+                </div>
+                <div class="col-sm-8">
+                  <div class="input-group mb-3">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                          name="dp1" [(ngModel)]="startDate"
+                          (ngModelChange)="startDateBrowse($event)"
+                          ngbDatepicker #d1="ngbDatepicker">
+                  <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                          <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                      </button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-bottom pb-3 pt-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a href="javascript:">Fecha Fin</a>
+                </div>
+                <div class="col-sm-8">
+                  <div class="input-group mb-3">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                          name="dp2" [(ngModel)]="endDate"
+                          (ngModelChange)="endDateBrowse($event)"
+                          ngbDatepicker #d2="ngbDatepicker">
+                  <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button">
+                          <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                      </button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

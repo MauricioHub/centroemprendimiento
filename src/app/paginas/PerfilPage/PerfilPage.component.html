@@ -1,0 +1,9 @@
+<app-emprendedor *ngIf="isEmprendedor" 
+    [persona]="persona" 
+    [emprendedor]="emprendedor" 
+    [emprendimiento]="emprendimiento" 
+    [listaEmprendimientos]="listaEmprendimientos"></app-emprendedor>
+<app-asistenciaTecnica *ngIf="isAsistente" [persona]="persona"></app-asistenciaTecnica>
+<app-mentor *ngIf="isMentor" [persona]="persona"></app-mentor>
+<app-administrador *ngIf="isAdministrador" [persona]="persona"></app-administrador>
+<app-mesaServicio *ngIf="isMesa_servicio" [persona]="persona"></app-mesaServicio>

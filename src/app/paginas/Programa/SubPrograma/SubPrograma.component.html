@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-12">
+    <app-card *ngIf="programa" cardTitle="{{programa.sub_programa.sub_programa}}"
+      captionClass="mb-0 text-muted" cardClass="mb-0" blockClass="p-0" [options]="false">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: center;"
+          *ngFor="let etapa of programa.etapas; index as j;">
+          <div class="thumbnail mb-4">
+            <div class="thumb">
+              <p class="img-fluid img-thumbnail" *ngIf="programa.sub_programa.fase == etapa.id_etapa"
+                [ngClass]="{'balloon': programa.sub_programa.fase == etapa.id_etapa}">
+                Estás aquí
+              </p>
+              <p style="font-size: 20px;" *ngIf="programa.sub_programa.fase != etapa.id_etapa">&nbsp;</p>
+            </div>
+          </div>
+          <div class="thumbnail mb-4">
+            <div class="thumb" (click)="openEtapa(etapa)">
+              <span [innerText]="'Etapa '+(j+1)">Etapa 1</span><br>
+              <img [src]="etapa.url_logo" alt="" class="img-fluid img-thumbnail" style="background-color: white;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

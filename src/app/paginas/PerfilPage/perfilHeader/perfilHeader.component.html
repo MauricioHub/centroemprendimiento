@@ -1,0 +1,53 @@
+<div  class="user-profile user-card mb-4" *ngIf="persona">
+  <div class="card-header border-0 p-0 pb-0">
+    <div  class="cover-img-block">
+      <div class="overlay"></div>
+      <div class="change-cover">
+        <div class="dropdown" ngbDropdown placement="bottom-left">
+          <a class="drp-icon dropdown-toggle" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"><i class="icon feather icon-camera"></i></a>
+          <div class="dropdown-menu" ngbDropdownMenu>
+            <a class="dropdown-item" href="javascript:"><i class="feather icon-upload-cloud mr-2"></i>upload new</a>
+            <a class="dropdown-item" href="javascript:"><i class="feather icon-image mr-2"></i>from photos</a>
+            <a class="dropdown-item" href="javascript:"><i class="feather icon-film mr-2"></i> upload video</a>
+            <a class="dropdown-item" href="javascript:"><i class="feather icon-trash-2 mr-2"></i>remove</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div  class="card-body py-0">
+    <div class="user-about-block m-0">
+      <div class="row">
+        <div class="col-md-4 text-center mt-n5">
+          <app-fotoPerfil></app-fotoPerfil>
+          <h5  id ="paso1" class="mb-1" [innerText]="usuario.getName()"></h5>
+          <p class="mb-2 text-muted" [innerText]="persona.frase_perfil ? persona.frase_perfil : 'Preséntate en 100 caracteres'"></p>
+        </div>
+        <div class="col-md-8 mt-md-4">
+          <div class="row">
+            <div class="col-md-6">
+              <a (click)="redSocial(red.red)" target="_blank" class="mb-1 text-muted d-flex align-items-end text-h-primary"
+                *ngFor="let red of persona.redes_sociales">
+                <i [class]="'mr-2 f-18 fab ' + red.icono"></i>
+                <span [innerText]="red.red"></span>
+              </a>
+              <div class="clearfix"></div>
+            </div>
+            <div class="col-md-6">
+              <div class="media">
+                <i class="feather icon-map-pin mr-2 mt-1 f-18"></i>
+                <div class="media-body">
+                  <p class="mb-0 text-muted" [innerText]="persona.provincia" *ngIf="persona.provincia"></p>
+                  <p class="mb-0 text-muted" [innerText]="persona.ciudad" *ngIf="persona.ciudad"></p>
+                  <p class="mb-0 text-muted" [innerText]="persona.direccion" *ngIf="persona.direccion"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-content select=".app-option-perfil"></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

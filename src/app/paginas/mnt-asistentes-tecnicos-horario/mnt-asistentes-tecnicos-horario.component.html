@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-sm-12">
+  <app-card cardTitle="Horario de: {{nombreAsistenteTecnico}}" [options]="false">
+      <form action="javascript:" class="form-inline">
+        <div class="form-group mb-2">
+          <label for="selectdia" class="sr-only">Dia</label>
+          <select [(ngModel)]="txtDia" [ngModelOptions]="{standalone: true}" class="form-control" id="selectdia">
+            <option>LUNES</option>
+            <option>MARTES</option>
+            <option>MIERCOLES</option>
+            <option>JUEVES</option>
+            <option>VIERNES</option>
+          </select>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="selecthorainicio" class="sr-only">Hora Inicio</label>
+          <input [(ngModel)]="txtHoraInicio" [ngModelOptions]="{standalone: true}" type="time" id="selecthorainicio" class="form-control" placeholder="Date" atp-time-picker>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="selecthorafin" class="sr-only">Hora Fin</label>
+          <input [(ngModel)]="txtHoraFin" [ngModelOptions]="{standalone: true}" type="time" id="selecthorafin" class="form-control" placeholder="Date" atp-time-picker>
+        </div>  
+        <button type="button" (click)="agregarAHorario()" class="btn btn-primary mb-2">Agregar a horario</button>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" (click)="guardarHorario()" class="btn btn-primary mb-2">Guardar cambios</button>
+      </form>    
+    </app-card>
+  </div> 
+</div>   
+
+
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" cardClass="user-profile-list" [options]="false">
+      <div class="dt-responsive table-responsive">
+        <table datatable class="table table-striped row-border table-hover">
+          <thead>
+            <tr>
+              <th>Dia</th>
+              <th>Hora inicio</th>
+              <th>Hora Fin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let horario of horarioAT; index as i;">
+              <td>{{horario.dia}}</td>
+              <td>{{horario.hora_inicio}}</td>   
+              <td>
+                  {{horario.hora_fin}} 
+                  <div class="overlay-edit"> 
+                    {{horario.hora_fin}}                  
+                    <button (click)="eliminarItem(i)" type="button" class="btn btn-icon btn-danger"><i class="feather icon-trash-2"></i></button>
+                  </div>
+              </td>                                    
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

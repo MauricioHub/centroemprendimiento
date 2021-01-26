@@ -1,0 +1,817 @@
+<div class="row" *ngIf="_emprendimiento">
+  <div class="col-xl-12 col-sm-12">
+    <app-card [cardTitle]="_emprendimiento.nombre" [options]="false" captionClass="mb-0 text-muted" cardClass="mb-0"
+      blockClass="p-0">
+      <aw-wizard #wizard class="arc-wizard" [awNavigationMode] [navigateBackward]="navigateBackward"
+        [navigateForward]="navigateForward">
+        <aw-wizard-step stepTitle="Emprendimiento" (stepExit)="grabarPaso1()">
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Información general</h4>
+              <!--form class="form-1 needs-validation" id="form-1" novalidate [formGroup]="formPasoP">
+                <div class='row'>
+                  <div class='col-md-6'>
+                    <div class="form-group mb-3">
+                      <label class="form-control-label">Nombre de emprendimiento</label>
+                      <input type="text" class="form-control obligatorio campoDE" 
+                        [ngClass]="{'is-invalid': getValid2(formPasoP.controls.nombre)}"
+                        [(ngModel)]="_emprendimiento.nombre" 
+                        formControlName="nombre"
+                        required 
+                        placeholder="Emprendimiento"
+                        name="nombre">
+                        <label id="validation-nombre-error" *ngIf="getValid2(formPasoP.controls.nombre)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+                    </div>
+                  </div>
+                </div>
+              </form-->
+              <form class="form-1 needs-validation" id="form-1" novalidate [formGroup]="formPaso1">
+                <!--div class='row'>
+                                        <div class='col-md-6'>
+                                            <label class="form-control-label">¿Cómo describirías tu interés en el Centro de Emprendimiento de ÉPICO? </label>
+                                            <div data-bind="foreach: catalogo.listaInteresCentroEmprendimiento">
+                                                <label class="custom-control custom-radio">
+                                                    <input type="radio" name="radio_interes" class="custom-control-input"
+                                                           data-bind="attr: {id: 'radio_interes_' + id}, value: id, 
+                                                            checked: $parent.persona.id_interes_centro_emprendimiento" 
+                                                           required>
+                                                    <span class="custom-control-label"
+                                                          data-bind="attr: {for: 'radio_interes_' + id}, text: nombre"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class='col-md-6' data-bind="visible: persona.id_interes_centro_emprendimiento()=='2' || persona.id_interes_centro_emprendimiento()=='3' ">
+                                            <label class="form-control-label">¿Cuál de las siguientes razones describe mejor las razones por las cuales no has podido empezar con tu emprendimiento?  </label>
+                                            <div data-bind="foreach: catalogo.listaRazonesNoEmprender">
+                                                <label class="custom-control custom-radio">
+                                                    <input type="radio" name="razon_no_emprender" class="custom-control-input"
+                                                           data-bind="attr: {id: 'razon_no_emprender_' + id, disabled: $parent._emprendimiento.completado()=='100'}, value: id, 
+                                                            checked: $parent.emprendedor.id_razon_no_emprender" required>
+                                                    <span class="custom-control-label"
+                                                          data-bind="attr: {for: 'razon_no_emprender_' + id}, text: nombre"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class='col-md-6' data-bind="visible: persona.id_interes_centro_emprendimiento()!='1' 
+                                                    && persona.id_interes_centro_emprendimiento()!='8' 
+                                                    && persona.id_interes_centro_emprendimiento()!='5' 
+                                                    && persona.id_interes_centro_emprendimiento()!='2' 
+                                                    && persona.id_interes_centro_emprendimiento()!='3'">
+                                            <div class="form-group mb-3">
+                                                <label >Nombre de emprendimiento</label>
+                                                <input type="text" class="form-control" data-bind="value: _emprendimiento.nombre" required placeholder="Emprendimiento">
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label >¿Cuántos fundadores o socios conforman el emprendimiento?</label>
+                                                <input type="number" class="form-control" data-bind="value: _emprendimiento.cant_socios " required placeholder="Cantidad de socios">
+                                            </div>
+                                            <div class="form-group mb-3"data-bind="visible: persona.id_interes_centro_emprendimiento()=='3' || persona.id_interes_centro_emprendimiento() =='4'">
+                                                <label >¿En qué etapa se encuentra su emprendimiento?</label>
+                                                <select class="form-control" name="id_etapa_emprendimiento" required placeholder="Seleccione"
+                                                        data-bind="options: catalogo.listaEtapaEmprendimiento,
+                                                                    optionsText: 'nombre',
+                                                                    optionsValue: 'id',
+                                                                    value: _emprendimiento.id_etapa_emprendimiento,
+                                                                    koFocus: _emprendimiento.nombre,
+                                                                    optionsCaption: 'Seleccione'">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div-->
+
+                <div class='row'>
+                  <div class='col-md-6'>
+                    <div class="form-group mb-3">
+                      <label class="form-control-label">Nombre comercial o marca que utiliza</label>
+                      <input type="text" class="form-control obligatorio campoDE"
+                        [ngClass]="{'is-invalid': getValid(formPaso1.controls.nombre)}" formControlName="nombre"
+                        required uppercase placeholder="Nombre comercial o marca que utiliza" [(ngModel)]="_emprendimiento.nombre">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso1.controls.nombre)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class='col-md-6'>
+                    <div class="form-group mb-3">
+                      <label class="form-control-label">¿Cuántos fundadores o socios conforman el
+                        emprendimiento?</label>
+                      <input type="number" class="form-control obligatorio campoDE" formControlName="cant_socios"
+                        name="cant_socios" [(ngModel)]="_emprendimiento.cant_socios"
+                        [ngClass]="{'is-invalid': getValid(formPaso1.controls.cant_socios)}" required
+                        placeholder="Cantidad socios">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso1.controls.cant_socios)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class='col-md-6'>
+                    <div class="form-group mb-3"
+                      data-bind="visible: programa_selecionada.sub_programa.fase()=='3' || programa_selecionada.sub_programa.fase() =='4'">
+                      <label class="form-control-label">¿En qué etapa se encuentra su emprendimiento?</label>
+                      <select class="form-control obligatorio campoDE" name="etapa_emprendimiento" required
+                        [(ngModel)]="_emprendimiento.id_etapa_emprendimiento" formControlName="etapa_emprendimiento"
+                        [ngClass]="{'is-invalid': getValid(formPaso1.controls.etapa_emprendimiento)}"
+                        placeholder="Seleccione">
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let item of listaEtapaEmprendimiento" [value]="item.id"
+                          [innerText]="item.nombre"></option>
+                      </select>
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso1.controls.etapa_emprendimiento)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                </div>
+
+                <br>
+
+                <div class='row'>
+                  <div class="col-md-12">
+                    <h3>Actividad del emprendimiento</h3>
+                  </div>
+                  <div class='col-md-6'>
+                    <div class="form-group mb-3">
+                      <label class="form-control-label">Actividad económica</label>
+                      <select class="form-control obligatorio campoDE" name="tipo_emprendimiento" required
+                        placeholder="Seleccione" [(ngModel)]="_emprendimiento.id_tipo_emprendimiento"
+                        formControlName="tipo_emprendimiento"
+                        [ngClass]="{'is-invalid': getValid(formPaso1.controls.tipo_emprendimiento)}">
+                        <option *ngFor="let item of listaTipoEmprendimiento" [value]="item.id"
+                          [innerText]="item.nombre"></option>
+                      </select>
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso1.controls.tipo_emprendimiento)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+
+                  <div class='col-md-6'>
+                    <div class="form-group mb-3">
+                      <label class="form-control-label">Indique el número de personas que laboran en su
+                        emprendimiento</label>
+                      <input type="number" class="form-control obligatorio campoDE"
+                        [(ngModel)]="_emprendimiento.numero_labora" formControlName="numero_labora"
+                        [ngClass]="{'is-invalid': getValid(formPaso1.controls.numero_labora)}" name="numero_labora"
+                        required placeholder="# de personas que laboran">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso1.controls.numero_labora)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+
+                  <div class='col-md-6'>
+                    <div class="form-group mb-3">
+                      <label class="form-control-label">Ventas mensuales</label>
+                      <input type="number" class="form-control campoDE" [(ngModel)]="_emprendimiento.venta_mensual"
+                        formControlName="venta_mensual"
+                        [ngClass]="{'is-invalid': getValid(formPaso1.controls.venta_mensual)}"
+                        data-bind="value: _emprendimiento.venta_mensual" name="venta_mensual" required
+                        placeholder="venta mensual promedio">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso1.controls.venta_mensual)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class='row'>
+                  <div class="col-md-12">
+                    <h3>Actividades complementarias</h3>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-control-label">
+                      Respecto a las actividades complementarias o de apoyo: ¿Cuáles considera usted que le traen
+                      dificultad para ejecutar su negocio con eficiencia y obtener buenos resultados? Seleccione todas
+                      las opciones que considere:
+                    </label>
+                    <div data-bind="foreach: _emprendimiento.listaActividadesComplentarias">
+                      <label class="custom-control custom-radio"
+                        *ngFor="let item of _emprendimiento.listaActividadesComplentarias">
+                        <input type="checkbox" class="custom-control-input" [(ngModel)]="item.selected"
+                          [ngModelOptions]="{standalone: true}" [attr.id]="'actividad_complementaria_' + item.id"
+                          [attr.name]="'actividad_complementaria_' + item.id"
+                          data-bind="attr: {id: 'actividad_complementaria_' + id}, value: id, checked: selected">
+                        <span class="custom-control-label" [attr.for]="'actividad_complementaria_' + item.id"
+                          [innerText]="item.nombre"
+                          data-bind="attr: {for: 'actividad_complementaria_' + id}, text: nombre"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label class="form-control-label">Dirección exacta del local </label>
+                      <input type="text" class="form-control obligatorio campoDE"
+                        data-bind="value: _emprendimiento.direccion" name="direccion_local" required
+                        [(ngModel)]="_emprendimiento.direccion" formControlName="direccion"
+                        [ngClass]="{'is-invalid': getValid(formPaso1.controls.direccion)}"
+                        placeholder="Dirección del local">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso1.controls.direccion)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label class="form-control-label">Ubicación GPS del local (URL)</label>
+                      <input type="text" class="form-control campoDE" data-bind="value: _emprendimiento.direccion_url"
+                        name="direccion_url" required placeholder="URL de google map de la ubicacion del local">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-primary btn-sm" (click)="grabarPaso1(formPaso1)">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+
+
+
+
+        <aw-wizard-step stepTitle="Contacto" (stepExit)="grabarPaso2()">
+          <div class="row">
+            <div class="col-sm-12">
+              <form class="form-2 needs-validation" id="form-2" novalidate [formGroup]="formPaso2">
+                <div class='row'>
+                  <div class="col-md-12">
+                    <h3>Redes sociales del emprendimiento</h3>
+                    <div data-bind="foreach: _emprendimiento.listaRedesSociales" class="col-md-12 row">
+                      <div class="col-md-6" *ngFor="let item of _emprendimiento.listaRedesSociales">
+                        <div class="form-group mb-3">
+                          <label [innerText]="item.nombre">Nombre de emprendimiento</label>
+                          <input type="text" class="form-control campoRS" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="item.red" placeholder="URL">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class='row'>
+                  <div class="col-md-12 ">
+                    <div class="col-md-12 row">
+                      <div class='col-md-6'>
+                        <div class="form-group mb-3">
+                          <label>WhatsApp (Número del emprendimiento)</label>
+                          <input type="text" name="telefono_whatsapp" formControlName="telefono_whatsapp"
+                            class="form-control campoRS" [(ngModel)]="_emprendimiento.telefono_whatsapp"
+                            data-bind="value: _emprendimiento.telefono_whatsapp, koFocus: _emprendimiento.telefono_whatsapp"
+                            placeholder="Whatsapp">
+                        </div>
+                      </div>
+                      <div class='col-md-6'>
+                        <div class="form-group mb-3">
+                          <label>Correo del emprendimiento</label>
+                          <input type="text" name="email" class="form-control obligatorio campoRS"
+                            formControlName="email" [(ngModel)]="_emprendimiento.email"
+                            [ngClass]="{'is-invalid': getValid(formPaso2.controls.email)}" placeholder="email">
+                          <label id="validation-nombre-error" *ngIf="getValid(formPaso2.controls.email)"
+                            class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                            obligatorio</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-secondary btn-sm" awPreviousStep>Atrás</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="grabarPaso2(formPaso2)">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+
+
+
+
+        <aw-wizard-step stepTitle="Formalizado" (stepExit)="grabarPaso3()">
+          <div class="row">
+            <div class="col-sm-12">
+              <form class="form-3 needs-validation" id="form-3" novalidate [formGroup]="formPaso3">
+                <div class='row'>
+                  <div class="col-md-12">
+                    <h3>Emprendimiento Formalizado</h3>
+                  </div>
+                  <div class='col-md-6'>
+                    <div class="form-group mb-3">
+                      <label>¿Su emprendimiento esta formalizado?</label>
+                      <select class="form-control obligatorio compoEF" name="emprendimiento_formalizado" required
+                        placeholder="Seleccione" formControlName="emprendimiento_formalizado"
+                        [(ngModel)]="_emprendimiento.emprendimiento_formalizado"
+                        [ngClass]="{'is-invalid': getValid(formPaso3.controls.emprendimiento_formalizado)}">
+                        <option value="">Seleccione</option>
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                      </select>
+                      <label id="validation-nombre-error"
+                        *ngIf="getValid(formPaso3.controls.emprendimiento_formalizado)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class='col-md-6' data-bind="visible: _emprendimiento.emprendimiento_formalizado()=='NO'">
+                    <div class="form-group mb-3">
+                      <label>¿Estaría dispuesto a formalizarse?</label>
+                      <select class="form-control" name="desea_formalizarse" placeholder="Seleccione"
+                        formControlName="desea_formalizarse" [(ngModel)]="_emprendimiento.desea_formalizarse" [ngClass]="{'is-invalid': getValid2(formPaso3.controls.desea_formalizarse, _emprendimiento.emprendimiento_formalizado!='NO' ), 
+                                    'obligatorio': _emprendimiento.emprendimiento_formalizado==='NO'}">
+                        <option value="">Seleccione</option>
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                      </select>
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso3.controls.desea_formalizarse)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class='col-md-6' data-bind="visible: _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="form-group mb-3">
+                      <label>¿Bajo qué régimen empresarial está operando su
+                        emprendimiento?</label>
+                      <select class="form-control compoEF" name="regimen_emprensarial" data-bind="value: _emprendimiento.persona, koFocus: _emprendimiento.persona, 
+                                    event: {'blur': _emprendimiento.selectPersona},
+                                    css: {'obligatorio': _emprendimiento.emprendimiento_formalizado()=='SI'}"
+                        placeholder="Seleccione" (change)="selectPersona()" formControlName="persona"
+                        [(ngModel)]="_emprendimiento.persona"
+                        [ngClass]="{'is-invalid': getValid2(formPaso3.controls.persona, (_emprendimiento.emprendimiento_formalizado!='SI') ), 'obligatorio': _emprendimiento.emprendimiento_formalizado=='SI'}">
+                        <option value="">Seleccione</option>
+                        <option value="N">Natural</option>
+                        <option value="J">Jurídica</option>
+                      </select>
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso3.controls.persona)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class='col-md-6' data-bind="visible: _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="form-group mb-3">
+                      <label>¿Qué modalidad de tributación utiliza?</label>
+                      <select class="form-control compoEF" name="opera_ruc_rise" required data-bind="value: _emprendimiento.opera_ruc_rise, koFocus: _emprendimiento.opera_ruc_rise,
+                                    css: {'obligatorio': _emprendimiento.emprendimiento_formalizado()=='SI'}"
+                        placeholder="Seleccione" formControlName="opera_ruc_rise"
+                        [(ngModel)]="_emprendimiento.opera_ruc_rise"
+                        [ngClass]="{'is-invalid': getValid2(formPaso3.controls.opera_ruc_rise, !(_emprendimiento.emprendimiento_formalizado=='SI') ), 'obligatorio': _emprendimiento.emprendimiento_formalizado=='SI'}">
+                        <option value="">Seleccione</option>
+                        <option value="RUC">RUC</option>
+                        <option value="RISE">RISE</option>
+                      </select>
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso3.controls.opera_ruc_rise)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class='col-md-6'
+                    data-bind="visible: _emprendimiento.persona()=='J' && _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="form-group mb-3">
+                      <label>¿Qué forma societaria tiene?</label>
+                      <select class="form-control" name="persona_societaria" required placeholder="Seleccione"
+                        formControlName="persona_societaria" [(ngModel)]="_emprendimiento.id_tipo_persona_societaria"
+                        [ngClass]="{'is-invalid': getValid2(formPaso3.controls.persona_societaria, !(_emprendimiento.persona=='J' && _emprendimiento.emprendimiento_formalizado=='SI') ),
+                                    'obligatorio': _emprendimiento.persona=='J' && _emprendimiento.emprendimiento_formalizado=='SI'}"
+                        data-bind="options: catalogo.listaPersonaSocietaria,
+                                        optionsText: 'nombre',
+                                        optionsValue: 'id',
+                                        value: _emprendimiento.id_tipo_persona_societaria, koFocus: _emprendimiento.id_tipo_persona_societaria,
+                                        optionsCaption: 'Seleccione',
+                                        css: {'obligatorio': _emprendimiento.persona()=='J' && _emprendimiento.emprendimiento_formalizado()=='SI',
+                                                'compoEF': _emprendimiento.persona()=='J' && _emprendimiento.emprendimiento_formalizado()=='SI'}">
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let item of listaPersonaSocietaria" [value]="item.id" [innerText]="item.nombre">
+                        </option>
+                      </select>
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso3.controls.persona_societaria)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                    <div class="form-group mb-3"
+                      data-bind="visible: _emprendimiento.id_tipo_persona_societaria() === '3'">
+                      <label>Otra persona societaria</label>
+                      <input type="text" class="form-control"
+                        data-bind="value: _emprendimiento.otra_persona_societaria, koFocus: _emprendimiento.otra_persona_societaria"
+                        formControlName="otra_persona_societaria" [(ngModel)]="_emprendimiento.otra_persona_societaria"
+                        [ngClass]="{'is-invalid': getValid2(formPaso3.controls.otra_persona_societaria, !(_emprendimiento.id_tipo_persona_societaria == 3) )}"
+                        name="otra_persona_societaria" required placeholder="Forma societaria">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso3.controls.otra_persona_societaria)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class='col-md-6'
+                    data-bind="visible: _emprendimiento.opera_ruc_rise()=='RUC' && _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="form-group mb-3">
+                      <label>Indique el Número de RUC</label>
+                      <input type="text" class="form-control compoEF" data-bind="value: _emprendimiento.ruc_rise, koFocus: _emprendimiento.ruc_rise,
+                                    css: {'obligatorio': _emprendimiento.persona()==='N' && _emprendimiento.opera_ruc_rise()==='RUC'},
+                                   attr: {'rucNatural': _emprendimiento.persona()==='N' ? 'true' : null,
+                                          'rucJuridica': _emprendimiento.persona()==='J' ? 'true' : null}"
+                        name="ruc_rise" minLength="13" maxlength="13" rucNatural="true" required
+                        formControlName="ruc_rise" [(ngModel)]="_emprendimiento.ruc_rise"
+                        [ngClass]="{'is-invalid': getValid2(formPaso3.controls.ruc_rise, !(_emprendimiento.opera_ruc_rise=='RUC' && _emprendimiento.emprendimiento_formalizado=='SI') )}"
+                        placeholder="RUC/RISE">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso3.controls.ruc_rise)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+
+                  </div>
+                  <div class='col-md-6' data-bind="visible: _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="form-group mb-3">
+                      <label>Indique su Razón Social</label>
+                      <input type="text" class="form-control uppercase compoEF" data-bind="value: _emprendimiento.razon_social,
+                                    css: {'obligatorio': _emprendimiento.emprendimiento_formalizado()=='SI'}"
+                        name="razon_social" required placeholder="Razón social" formControlName="razon_social"
+                        [(ngModel)]="_emprendimiento.razon_social"
+                        [ngClass]="{'is-invalid': getValid2(formPaso3.controls.razon_social, !(_emprendimiento.emprendimiento_formalizado=='SI') )}">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso3.controls.razon_social)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class='col-md-6' data-bind="visible: _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="form-group mb-3">
+                      <label>Nombre comercial</label>
+                      <input type="text" class="form-control uppercase compoEF"
+                        [ngClass]="{'obligatorio': _emprendimiento.emprendimiento_formalizado=='SI'}" data-bind="value: _emprendimiento.nombre_comercial,
+                                    css: {'obligatorio': _emprendimiento.emprendimiento_formalizado()=='SI'}"
+                        name="nombre_comercial" required placeholder="Nombre comercial"
+                        formControlName="nombre_comercial" [(ngModel)]="_emprendimiento.nombre_comercial"
+                        [ngClass]="{'is-invalid': getValid2(formPaso3.controls.nombre_comercial, !(_emprendimiento.emprendimiento_formalizado=='SI') )}">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso3.controls.nombre_comercial)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!--div class="row" data-bind="visible: _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="col-md-6" data-bind="visible: _emprendimiento.persona()!='' ">
+                        <div class="form-group form-group-sm mb-3">
+                            <label class="form-control-label">Adjuntar en archivo PDF: Certificado actualizado RUC/RISE <span style='color: red'>*</span></label>
+                            <input type="file" class="form-control uploadFile" required accept=".pdf" name="file_ruc_rise" id="file_ruc_rise" data-output-name ="infoArchivoRucRise" data-output style='display: none;'>
+                            <label class="form-control" for="file_ruc_rise" class="subir">
+                                <div id="infoArchivoRucRise">
+                                    <i class="glyphicon glyphicon-upload"></i> Subir archivo
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6" data-bind="visible: _emprendimiento.persona()!='' ">
+                        <div class="form-group form-group-sm mb-3">
+                            <label data-bind="visible: _emprendimiento.persona() === 'J' ">Adjuntar en archivo PDF: Cédula de identidad de representante legal (persona jurídica) <span style='color: red'>*</span></label>
+                            <label data-bind="visible: _emprendimiento.persona() === 'N' ">Adjuntar en archivo PDF: Cédula de identidad (persona natural) <span style='color: red'>*</span></label>
+                            <input type="file" class="form-control uploadFile" required accept=".pdf" name="file_archivo_ci" id="file_archivo_ci" data-output-name ="infoArchivoCI" style='display: none;'>
+                            <label class="form-control" for="file_archivo_ci" class="subir">
+                                <div id="infoArchivoCI">
+                                    <i class="glyphicon glyphicon-upload"></i> Subir archivo
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" data-bind="visible: _emprendimiento.persona()==='J' && _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="col-md-12">
+                        <div class="form-group form-group-sm">
+                            <label class="form-control-label">Adjuntar en archivo PDF: Nombramiento de representante legal actualizado <span style='color: red'>*</span></label>
+                            <input type="file" class="form-control uploadFile" required accept=".pdf" name="cv_int" id="cv_int" data-output-name ="info" data-output style='display: none;'>
+                            <label class="form-control" for="cv_int" class="subir">
+                                <div id="info">
+                                    <i class="glyphicon glyphicon-upload"></i> Subir archivo
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" data-bind="visible: _emprendimiento.emprendimiento_formalizado()=='SI'">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-sm">
+                            <label class="form-control-label">Adjuntar en archivo PDF: Planilla del IESS</label>
+                            <input type="file" class="form-control uploadFile" required accept=".pdf" name="file_archivo_iess" id="file_archivo_iess" data-output-name ="infoArchivoArchivoIess" data-output style='display: none;'>
+                            <label class="form-control" for="file_archivo_iess" class="subir">
+                                <div id="infoArchivoArchivoIess">
+                                    <i class="glyphicon glyphicon-upload"></i> Subir archivo
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" data-bind="visible: _emprendimiento.emprendimiento_formalizado()=='SI'">
+                        <div class="form-group form-group-sm">
+                            <label class="form-control-label">Adjuntar en archivo PDF: Impuesto a la renta del año anterior</label>
+                            <input type="file" class="form-control uploadFile" required accept=".pdf" name="file_impuesto_renta" id="file_impuesto_renta" data-output-name ="infoArchivoImpuestoRenta" data-output style='display: none;'>
+                            <label class="form-control" for="file_impuesto_renta" class="subir">
+                                <div id="infoArchivoImpuestoRenta">
+                                    <i class="glyphicon glyphicon-upload"></i> Subir archivo
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div-->
+
+              </form>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-secondary btn-sm" awPreviousStep>Atrás</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="grabarPaso3(formPaso3)">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+
+
+
+
+        <aw-wizard-step stepTitle="Comercialización" (stepExit)="grabarPaso4()">
+          <div class="row">
+            <div class="col-sm-12">
+              <form class="form-4 needs-validation" id="form-4" novalidate [formGroup]="formPaso4">
+                <div class='row'>
+                  <div class="col-md-12">
+                    <h3>Comercializacion del emprendimiento</h3>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-control-label">
+                      ¿Dónde se comercializa el producto/servicio que ofrece su emprendimiento? Indicar una o más
+                      alternativas.
+                    </label>
+                    <div data-bind="foreach: _emprendimiento.listaLugarComercializacion">
+                      <label class="custom-control custom-radio custom-control-inline"
+                        *ngFor="let item of _emprendimiento.listaLugarComercializacion">
+                        <input type="checkbox" class="custom-control-input lugarComercializacion" name='lugar_comercial'
+                          [attr.id]="'lugar_comercial_' + item.id" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="item.selected" required
+                          data-bind="attr: {id: 'lugar_comercial_' + id}, value: id, checked: selected">
+                        <span class="custom-control-label" [attr.for]="'lugar_comercial_' + item.id"
+                          [innerText]="item.nombre"
+                          data-bind="attr: {for: 'lugar_comercial_' + id}, text: nombre"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class='row'>
+                  <div class="col-md-6">
+                    <label class="form-control-label">
+                      ¿Qué canal utiliza para vender sus productos?
+                    </label>
+                    <div data-bind="foreach: _emprendimiento.listaCanalVentas">
+                      <label class="custom-control custom-radio" *ngFor="let item of _emprendimiento.listaCanalVentas">
+                        <input type="checkbox" class="custom-control-input canalVentas" name='canal_venta' required
+                          [attr.id]="'canal_venta_' + item.id" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="item.selected" (change)="selectCanal(item)" data-bind="attr: {id: 'canal_venta_' + id}, value: id, checked: selected, 
+                          event: {'change': $parent._emprendimiento.selectCanal($data)}">
+                        <span class="custom-control-label" [attr.for]="'canal_venta_' + item.id"
+                          [innerText]="item.nombre" data-bind="attr: {for: 'canal_venta_' + id}, text: nombre"></span>
+                      </label>
+                    </div>
+                    <br>
+                  </div>
+                  <div class="col-md-6" *ngIf="_emprendimiento.id_canal_venta==1"
+                    data-bind="visible: _emprendimiento.id_canal_venta()==='1'">
+                    <label class="form-control-label">
+                      En el caso que usted realice la entrega al cliente final ¿Cómo envía el producto al cliente?
+                    </label>
+                    <div data-bind="foreach: _emprendimiento.listaEmpresaDelivery">
+                      <label class="custom-control custom-radio"
+                        *ngFor="let item of _emprendimiento.listaEmpresaDelivery">
+                        <input type="checkbox" class="custom-control-input" name='delivery' required
+                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.selected"
+                          [attr.id]="'delivery_' + item.id" *ngIf="_emprendimiento.id_canal_venta==1"
+                          (change)="selectEmpresaDelivery(item)"
+                          [ngClass]="{'empresasDelivery': _emprendimiento.id_canal_venta==1}"
+                          data-bind="attr: {id: 'delivery_' + id}, 
+                                                value: id, 
+                                                checked: selected, 
+                                                css: {'empresasDelivery': $parent._emprendimiento.id_canal_venta()==='1'},
+                                                event: {'change': $parent._emprendimiento.selectEmpresaDelivery($data)}">
+                        <span class="custom-control-label" [attr.for]="'delivery_' + item.id" [innerText]="item.nombre"
+                          data-bind="attr: {for: 'delivery_' + id}, text: nombre"></span>
+                      </label>
+                    </div>
+                    <br>
+                    <div class="form-group mb-3" *ngIf="_emprendimiento.id_empresa_delivery == 5"
+                      data-bind="visible: _emprendimiento.id_empresa_delivery() === '5'">
+                      <label>Otra empresa delivery</label>
+                      <input type="text" class="form-control" data-bind="value: _emprendimiento.otra_empresa"
+                        name="otra_empresa" required placeholder="Ingrese cuál?" formControlName="otra_empresa"
+                        [(ngModel)]="_emprendimiento.otra_empresa"
+                        [ngClass]="{'is-invalid': getValid(formPaso4.controls.otra_empresa)}">
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso4.controls.otra_empresa)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class='row'>
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label>¿Cuántos ítems hay en su cartera de productos/servicios?</label>
+                      <select class="form-control campoCE" name="cant_tipo_producto" required
+                        data-bind="value: _emprendimiento.cant_tipo_producto" formControlName="cant_tipo_producto"
+                        [(ngModel)]="_emprendimiento.cant_tipo_producto"
+                        [ngClass]="{'is-invalid': getValid(formPaso4.controls.cant_tipo_producto)}">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="Más de 5">Más de 5</option>
+                      </select>
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso4.controls.cant_tipo_producto)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label>¿Su emprendimiento utiliza alguna plataforma de comercio electrónico?</label>
+                      <select class="form-control campoCE" name="utiliza_plataforma_electronica" required
+                        data-bind="value: _emprendimiento.utiliza_plataforma_electronica" placeholder="Seleccione"
+                        formControlName="utiliza_plataforma_electronica"
+                        [(ngModel)]="_emprendimiento.utiliza_plataforma_electronica"
+                        [ngClass]="{'is-invalid': getValid(formPaso4.controls.utiliza_plataforma_electronica)}">
+                        <option value="">Seleccione</option>
+                        <option value="SI">Sí, mi emprendimiento siempre, o gran parte de su vida, ha utilizado
+                          plataforma de comercio electrónico.</option>
+                        <option value="NO, PERO SI DESEO">No, no he utilizado plataformas de comercio electrónico, pero
+                          deseo comenzar a utilizarlas en el corto plazo.</option>
+                        <option value="NO, PERO NO DESEO">No, no he utilizado plataformas de comercio electrónico, y no
+                          deseo utilizarlas.</option>
+                      </select>
+                      <label id="validation-nombre-error"
+                        *ngIf="getValid(formPaso4.controls.utiliza_plataforma_electronica)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-secondary btn-sm" awPreviousStep>Atrás</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="grabarPaso4(formPaso4)">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+
+
+
+
+        <aw-wizard-step stepTitle="Financiamiento" (stepExit)="grabarPaso5()">
+          <div class="row">
+            <div class="col-sm-12">
+              <form class="form-5 needs-validation" id="form-5" novalidate [formGroup]="formPaso5">
+                <div class='row'>
+                  <div class="col-md-12">
+                    <h3>Financiamiento</h3>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label>¿Ha recibido algún tipo de financiamiento para su emprendimiento?
+                      </label>
+                      <select class="form-control obligatorio compoFI" name="financiamiento_para_su_emprendimiento"
+                        required data-bind="value: _emprendimiento.realizado_prestado" placeholder="Seleccione"
+                        formControlName="realizado_prestado" [(ngModel)]="_emprendimiento.realizado_prestado"
+                        [ngClass]="{'is-invalid': getValid(formPaso5.controls.realizado_prestado)}">
+                        <option value="">Seleccione</option>
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                      </select>
+                      <label id="validation-nombre-error" *ngIf="getValid(formPaso5.controls.realizado_prestado)"
+                        class="error jquery-validation-error small form-text invalid-feedback">Este campo es
+                        obligatorio</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6" *ngIf="_emprendimiento.realizado_prestado==='SI'"
+                    data-bind="visible: _emprendimiento.realizado_prestado()==='SI'">
+                    <label class="form-control-label">
+                      En qué entidad financiera ha obtenido crédito para su _emprendimiento. Indique todas las opciones
+                      que considere
+                    </label>
+                    <div data-bind="foreach: _emprendimiento.listaTipoFinancimientoConvencional">
+                      <label class="custom-control custom-radio"
+                        *ngFor="let item of _emprendimiento.listaTipoFinancimientoConvencional">
+                        <input type="checkbox" class="custom-control-input" [attr.id]="'finan_conven_' + item.id"
+                          [(ngModel)]="item.selected" [ngModelOptions]="{standalone: true}"
+                          data-bind="attr: {id: 'finan_conven_' + id}, value: id, checked: selected">
+                        <span class="custom-control-label" [attr.for]="'finan_conven_' + item.id"
+                          [innerText]="item.nombre" data-bind="attr: {for: 'finan_conven_' + id}, text: nombre"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6" *ngIf="_emprendimiento.realizado_prestado==='SI'"
+                    data-bind="visible: _emprendimiento.realizado_prestado()==='SI'">
+                    <label class="form-control-label">
+                      ¿Qué tipo de financiamiento ha recibido su emprendimiento?
+                    </label>
+                    <div data-bind="foreach: _emprendimiento.listaTipoFinancimientoNoConvencional">
+                      <label class="custom-control custom-radio"
+                        *ngFor="let item of _emprendimiento.listaTipoFinancimientoNoConvencional">
+                        <input type="checkbox" class="custom-control-input" [attr.id]="'finan_conven_' + item.id"
+                          [(ngModel)]="item.selected" [ngModelOptions]="{standalone: true}"
+                          data-bind="attr: {id: 'finan_conven_' + id}, value: id, checked: selected">
+                        <span class="custom-control-label" [attr.for]="'finan_conven_' + item.id"
+                          [innerText]="item.nombre" data-bind="attr: {for: 'finan_conven_' + id}, text: nombre"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-secondary btn-sm" awPreviousStep>Atrás</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="grabarPaso5(formPaso5)">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+
+
+
+        <aw-wizard-step stepTitle="Completado">
+          <div class="row">
+            <div class="col-sm-12">
+              <form class="text-center" #formPaso6>
+                <i class="feather icon-check-circle display-3 text-success" *ngIf="finalizado"
+                  data-bind="visible: actividad_selecionada.estado_actividad_inscripcion() == 'AP'"></i>
+                <i class="feather icon-edit display-3 text-info" *ngIf="!finalizado"
+                  data-bind="visible: actividad_selecionada.estado_actividad_inscripcion() != 'AP'"></i>
+                <h5 class="mt-3" data-bind="text: 'Actividad ' + actividad_selecionada.estado_actividad()">Registro
+                  existoso! . .</h5>
+                <a class="btn btn-info text-white" (click)="grabarPasoFinal()" *ngIf="showFinalizar"
+                  data-bind="click: finalizarActividad, visible: actividad_selecionada.estado_actividad_inscripcion() != 'AP'">Finalizar
+                  la edición</a>
+                <br>
+                <div class="offset-xl-3 offset-md-3 col-xl-6 col-md-6">
+                  <div class="card trafic-card">
+                    <div class="card-header">
+                      <h5>Avance del formulario</h5>
+                    </div>
+                    <div class="card-body">
+                      <p class="m-b-10">
+                        Datos del emprendimiento
+                        <span class="float-right" [innerText]="preguntasC1 + '/'+ preguntas1"
+                          data-bind="text: preguntasC1() + '/'+ preguntas1()"></span>
+                      </p>
+                      <ngb-progressbar [type]="preguntasP1>=80?'success':'warning'" [value]="preguntasP1">completado
+                      </ngb-progressbar>
+                      <p class="m-b-10 m-t-30">
+                        <span>Social </span>
+                        <span class="float-right" [innerText]="preguntasC2 + '/' + preguntas2"
+                          data-bind="text: preguntasC2() + '/'+ preguntas2()"></span>
+                      </p>
+                      <ngb-progressbar [type]="preguntasP2>=80?'success':'warning'" [value]="preguntasP2">completado
+                      </ngb-progressbar>
+                      <p class="m-b-10 m-t-30">
+                        <span>Formalización </span>
+                        <span class="float-right" [innerText]="preguntasC3 + '/' + preguntas3"
+                          data-bind="text: preguntasC3() + '/'+ preguntas3()"></span>
+                      </p>
+                      <ngb-progressbar [type]="preguntasP3>=80?'success':'warning'" [value]="preguntasP3">completado
+                      </ngb-progressbar>
+                      <p class="m-b-10 m-t-30">
+                        <span>Comercialización </span>
+                        <span class="float-right" [innerText]="preguntasC4 + '/'+ preguntas4"
+                          data-bind="text: preguntasC4() + '/'+ preguntas4()"></span>
+                      </p>
+                      <ngb-progressbar [type]="preguntasP4>=80?'success':'warning'" [value]="preguntasP4">completado
+                      </ngb-progressbar>
+                      <p class="m-b-10 m-t-30">
+                        <span>Financiamiento </span>
+                        <span class="float-right" [innerText]="preguntasC5 + '/'+ preguntas5"
+                          data-bind="text: preguntasC5() + '/'+ preguntas5()"></span>
+                      </p>
+                      <ngb-progressbar [type]="preguntasP5>=80?'success':'warning'" [value]="preguntasP5">completado
+                      </ngb-progressbar>
+                    </div>
+                  </div>
+                </div>
+                <!--div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                    <label class="custom-control-label" for="customCheck2">Subscribe Newslatter</label>
+                </div-->
+              </form>
+            </div>
+            <div class="col-sm-12 centered-content">
+              <div class="btn-group mt-10">
+                <button type="button" class="btn btn-secondary btn-sm" awPreviousStep>Atrás</button>
+                <button type="button" class="btn btn-success btn-sm" (click)="grabarPasoFinal()">Finalizar</button>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+      </aw-wizard>
+    </app-card>
+  </div>
+</div>

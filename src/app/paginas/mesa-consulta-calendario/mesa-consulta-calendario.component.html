@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Calendario" cardClass="elite-calendar" [options]="false">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="AsistenteTecnico">Asistente T&eacute;cnico</label>
+          <select [(ngModel)]="asistenteSeleccionado" (change)="onSelectAsistente(asistenteSeleccionado)"  class="form-control" id="AsistenteTecnico">
+            <option *ngFor="let asistente of asistentesTecnicos" [ngValue]="asistente">
+                {{asistente.nombre + ' ' + asistente.apellido}}
+            </option>
+          </select>          
+        </div>
+      </div>
+    </div>      
+      <div class="app" *ngIf="!notSupported">
+        <div class="app-calendar" *ngIf="calendarVisible">
+          <full-calendar
+            #calendar
+            defaultView="dayGridMonth"
+            [header]="{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            }"
+            locale="es"
+            [plugins]="calendarPlugins"
+            [weekends]="calendarWeekends"
+            [allDaySlot]="allDaySlot"
+            [events]="calendarEvents"
+            (dateClick)="handleDateClick($event)"
+            (eventClick)="handleEventClick($event)"
+          ></full-calendar>
+        </div>
+      </div>
+      <div class="col-sm-12 text-center" *ngIf="notSupported">
+        <div class="alert alert-danger"><code>css-animator</code> does not support in IE.</div>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div *ngIf="this.agendaSeleccionada && this.emprendedor">
+  <div class="q-view" [ngClass]="this.showView ? 'active' : ''">
+    <div class="overlay" (click)="this.showView = !this.showView"></div>
+    <div class="content">
+      <div class="card-body">
+        <h4>{{'Reunion ' + this.agendaSeleccionada.tipo_agenda}}</h4>
+        <div class="border-bottom pb-3 pt-3">
+          <div class="row">           
+            <div class="col-md-12 text-right">
+              <p class="d-inline-block mb-0"><i class="feather icon-calendar mr-1"></i><label class="mb-0">{{this.agendaSeleccionada.fecha_agenda + ' ' + this.agendaSeleccionada.hora_inicio_agenda}}</label></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <app-card [hidHeader]="true" cardClass="user-card user-card-3 support-bar1" [isCardFooter]="false" [options]="false">
+      <div class="text-center">
+        <img class="img-radius img-fluid wid-150" src="assets/images/user/img-avatar-1.jpg" alt="User image">
+        <h3 class="mb-1 mt-3 f-w-400">{{ this.agendaSeleccionada.persona1 }}</h3>
+        <p class="mb-3 text-muted">{{ this.emprendedor[0].email }}</p>
+        <ul class="list-inline f-20 mt-3 mb-0">
+          <li class="list-inline-item"><a href="javascript:" class="text-facebook"><i class="fab fa-facebook-f"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-twitter"><i class="fab fa-twitter"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-dribbble"><i class="fab fa-dribbble"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-pinterest"><i class="fab fa-pinterest"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-youtube"><i class="fab fa-youtube"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-googleplus"><i class="fab fa-google-plus-g"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+      </div>
+    </app-card> 
+    
+    <app-card cardTitle="Emprendimiento" blockClass="task-details" [options]="false" >
+      <table class="table">
+        <tbody>
+        <tr>
+          <td><i class="fa fa-building m-r-5"></i> Nombre:</td>
+          <td class="text-right"><span class="float-right"><a class="text-secondary" href="javascript:"> {{this.emprendedor[0].nombre_emprendimiento}}</a></span></td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-user m-r-5"></i>Tipo Persona</td>
+          <td class="text-right">{{this.emprendedor[0].tipo_persona}}</td>
+        </tr>         
+        <tr>
+          <td><i class="fa fa-user m-r-5"></i> RUC/RISE:</td>
+          <td class="text-right">{{this.emprendedor[0].ruc_rise}}</td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-users m-r-5"></i> Socios:</td>
+          <td class="text-right">{{this.emprendedor[0].cant_socios}}</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-chart-line m-r-5"></i> Ventas mensuales:</td>
+          <td class="text-right">{{this.emprendedor[0].venta_mensual}}</td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-building m-r-5"></i> Nombre comercial:</td>
+          <td class="text-right">{{this.emprendedor[0].nombre_comercial}}</td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-building m-r-5"></i>Razon social</td>
+          <td class="text-right"><a class="text-secondary" href="javascript:">{{this.emprendedor[0].razon_social}}</a></td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-users m-r-5"></i>Cantidad de personal</td>
+          <td class="text-right">{{this.emprendedor[0].numero_labora}}</td>
+        </tr> 
+        <!--tr>
+          <td><i class="fa fa-building m-r-5"></i>Lugar comercializacion</td>
+          <td class="text-right">{{this.emprendedor[0].lugar_comercializacion}}</td>
+        </tr-->
+        <tr>
+          <td><i class="fa fa-cloud m-r-5"></i>Archivo</td>
+          <td class="text-right"><a class="fa fa-download m-r-5" href="https://epico.gob.ec/archivos/{{this.archivos[0].modelo_negocio_archivo}}" target="_blank"></a>Descargar</td>
+        </tr>                       
+        </tbody>
+      </table>
+    </app-card>    
+
+    </div>
+  </div>
+</div>

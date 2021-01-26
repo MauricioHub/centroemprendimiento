@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-12">
+    <app-card [hidHeader]="true" blockClass="text-center" [options]="false">
+      <div class="row align-items-center m-l-0">
+        <div class="col-sm-6 text-left">
+          <h5>Filtros</h5>
+        </div>
+        <div class="col-sm-6 text-right">
+          <!--button type="button" class="btn btn-primary btn-sm" (click)="modalCustomer.show()"><i class="feather icon-plus"></i>New User</button-->
+        </div>
+      </div>
+
+      <!--ul class="list-inline">
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1 text-muted"> Sorting Options </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1 font-weight-bolder"> Reset </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1 text-muted"> Membership </a></li>
+        <li class="list-inline-item"><a href="javascript:" class="text-muted"> Username </a></li>
+      </ul-->
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'A'}" (click)="consultarEmprendedores('A','')"> A </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'B'}" (click)="consultarEmprendedores('B','')"> B </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'C'}" (click)="consultarEmprendedores('C','')"> C </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'D'}" (click)="consultarEmprendedores('D','')"> D </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'E'}" (click)="consultarEmprendedores('E','')"> E </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'F'}" (click)="consultarEmprendedores('F','')"> F </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'G'}" (click)="consultarEmprendedores('G','')"> G </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'H'}" (click)="consultarEmprendedores('H','')"> H </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'I'}" (click)="consultarEmprendedores('I','')"> I </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'J'}" (click)="consultarEmprendedores('J','')"> J </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'K'}" (click)="consultarEmprendedores('K','')"> K </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'L'}" (click)="consultarEmprendedores('L','')"> L </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'M'}" (click)="consultarEmprendedores('M','')"> M </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'N'}" (click)="consultarEmprendedores('N','')"> N </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'O'}" (click)="consultarEmprendedores('O','')"> O </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'P'}" (click)="consultarEmprendedores('P','')"> P </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'Q'}" (click)="consultarEmprendedores('Q','')"> Q </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'R'}" (click)="consultarEmprendedores('R','')"> R </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'S'}" (click)="consultarEmprendedores('S','')"> S </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'T'}" (click)="consultarEmprendedores('T','')"> T </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'U'}" (click)="consultarEmprendedores('U','')"> U </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'V'}" (click)="consultarEmprendedores('V','')"> V </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'W'}" (click)="consultarEmprendedores('W','')"> W </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'X'}" (click)="consultarEmprendedores('X','')"> X </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'Y'}" (click)="consultarEmprendedores('Y','')"> Y </a></li>
+        <li class="list-inline-item border-right m-0"><a href="javascript:" class="pr-2 pl-1" [ngClass]="{'text-muted': inicial != 'Z'}" (click)="consultarEmprendedores('Z','')"> Z </a></li>
+        <li class="list-inline-item"><a href="javascript:" class="font-weight-bolder" [ngClass]="{'text-muted': inicial != ''}" (click)="consultarEmprendedores('','')"> All </a></li>
+      </ul>
+    </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6" *ngFor="let emp of listaEmprendedores">
+    <app-card [hidHeader]="true" cardClass="user-card user-card-3 support-bar1" [isCardFooter]="true" footerClass="bg-light" [options]="false">
+        <div class="text-center">
+          <img class="img-radius img-fluid wid-150" 
+           alt="User image"
+           [src]="emp.url_foto ? emp.url_foto : 'images/user.png' "
+           (error)="pictNotLoading($event)">
+          <h3 class="mb-1 mt-3 f-w-400" [innerText]="emp.apellido + ' ' + emp.nombre">Sara Soudein</h3>
+          <p class="mb-3 text-muted" [innerText]="emp.frase_perfil">UI/UX Designer</p>
+          <ul class="list-inline f-20 mt-3 mb-0">
+            <li class="list-inline-item" *ngFor="let red of emp.redes_sociales">
+              <a  class="text-facebook" target="_blank"
+              [href]= "red.red" 
+              [class]="'text-'+red.nombre | lowercase ">
+                <i class="fab " [class]="red.icono"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="hover-data text-white">
+          <div class="">
+            <h4 class="text-white">Solicitar contacto</h4>
+            <p class="mb-1">Puedes solicitar la información de este emprendedor</p>
+            <p class="mb-3">Si el emprededor esta de acuerdo recibiras una notificación</p>
+            <button type="button" class="btn waves-effect waves-light btn-info" (click)="solicitarContacto()">
+              <i class="feather icon-link"></i> Solicitar
+            </button>
+          </div>
+        </div>
+        <!--div class="app-card-footer">
+          <div class="row text-center">
+            <div class="col">
+              <h6 class="mb-1">37</h6>
+              <p class="mb-0">Mails</p>
+            </div>
+            <div class="col">
+              <h6 class="mb-1">2749</h6>
+              <p class="mb-0">Followers</p>
+            </div>
+            <div class="col">
+              <h6 class="mb-1">678</h6>
+              <p class="mb-0">Following</p>
+            </div>
+          </div>
+        </div-->
+      </app-card>
+  </div>
+</div>

@@ -1,0 +1,367 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Calendario" cardClass="elite-calendar" [options]="false">
+      <div class="app" *ngIf="!notSupported">
+        <div class="app-calendar" *ngIf="calendarVisible">
+          <full-calendar
+            #calendar
+            defaultView="dayGridMonth"
+            [header]="{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            }"
+            locale="es"
+            [plugins]="calendarPlugins"
+            [weekends]="calendarWeekends"
+            [allDaySlot]="allDaySlot"
+            [events]="calendarEvents"
+            (dateClick)="handleDateClick($event)"
+            (eventClick)="handleEventClick($event)"
+          ></full-calendar>
+        </div>
+      </div>
+      <div class="col-sm-12 text-center" *ngIf="notSupported">
+        <div class="alert alert-danger"><code>css-animator</code> does not support in IE.</div>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div *ngIf="this.agendaSeleccionada && this.emprendedor">
+  <div class="q-view" [ngClass]="this.showView ? 'active' : ''">
+    <div class="overlay" (click)="this.showView = !this.showView"></div>
+    <div class="content">
+      <div class="card-body">
+        <h4>{{'Reunion ' + this.agendaSeleccionada.tipo_agenda}}</h4>
+        <div class="border-bottom pb-3 pt-3">
+          <div class="row">
+           <div class="col-md-6 text-left" *ngIf="this.showIR">
+              <button (click)="iniciarReunion()" class="btn btn-success btn-sm btn-round has-ripple"><i class="fa fa-calendar-plus-o"></i>Iniciar reunion</button>
+            </div>            
+            <div class="col-md-6 text-right">
+              <p class="d-inline-block mb-0"><i class="feather icon-calendar mr-1"></i><label class="mb-0">{{this.agendaSeleccionada.fecha_agenda + ' ' + this.agendaSeleccionada.hora_inicio_agenda}}</label></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <app-card *ngIf="this.showFR" [options]="false" [hidHeader]="true" cardClass="user-card user-card-3 support-bar1" [isCardFooter]="false">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <input type="text" [(ngModel)]="this.temas" class="form-control" id="temas" placeholder="Expectativas">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group fill">
+            <input type="text" [(ngModel)]="this.acuerdos" class="form-control" id="acuerdos" placeholder="Acuerdos">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group fill">
+            <input type="text" [(ngModel)]="this.observacion" class="form-control" id="Observacion" placeholder="Observacion">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group fill">
+             <label>¿Considera que el emprendedor se encuentra en la etapa correcta dentro del Programa de Fortalecimiento al Emprendedor de ÉPICO?</label>
+          </div>
+          <div class="custom-control custom-radio" [formGroup]="form">
+            <input type="radio" class="custom-control-input" id="correctFase" 
+                    value="correctFase"
+                    name="isFase" 
+                    formControlName="isFase" 
+                    (change)="changeParamEType($event)">
+            <label class="custom-control-label" for="correctFase">Si</label>
+          </div>
+          <!-- Group of default radios - option 2 -->
+          <div class="custom-control custom-radio" [formGroup]="form">
+            <input type="radio" class="custom-control-input" id="incorrectFase" 
+                    value="incorrectFase"
+                    name="isFase" 
+                    formControlName="isFase" 
+                    (change)="changeParamEType($event)">
+            <label class="custom-control-label" for="incorrectFase">No</label>
+          </div> 
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group fill">
+             <label></label>
+          </div>
+        </div>
+        <div class="col-sm-12" *ngIf="isOtherFase">
+          <div class="form-group fill">
+             <label>En caso de identificar que el emprendedor debería cambiar de etapa, por favor, seleccione la etapa en la que consideras que debe estar:</label>
+          </div>
+          <div class="custom-control custom-radio" [formGroup]="formRlc">
+            <input type="radio" class="custom-control-input" id="discoveringFase" 
+                    value="Descubriendo"
+                    name="relocatedFase" 
+                    formControlName="relocatedFase" 
+                    (change)="changeRFaseType($event)">
+            <label class="custom-control-label" for="discoveringFase">Etapa 1: Descubriendo</label>
+          </div>
+          <!-- Group of default radios - option 2 -->
+          <div class="custom-control custom-radio" [formGroup]="formRlc">
+            <input type="radio" class="custom-control-input" id="recreatingFase" 
+                    value="ReCreando"
+                    name="relocatedFase" 
+                    formControlName="relocatedFase" 
+                    (change)="changeRFaseType($event)">
+            <label class="custom-control-label" for="recreatingFase">Etapa 2: Re Creando</label>
+          </div>
+          <!-- Group of default radios - option 2 -->
+          <div class="custom-control custom-radio" [formGroup]="formRlc">
+            <input type="radio" class="custom-control-input" id="validatingFase" 
+                    value="Validando"
+                    name="relocatedFase" 
+                    formControlName="relocatedFase" 
+                    (change)="changeRFaseType($event)">
+            <label class="custom-control-label" for="validatingFase">Etapa 3: Validando</label>
+          </div>
+          <!-- Group of default radios - option 2 -->
+          <div class="custom-control custom-radio" [formGroup]="formRlc">
+            <input type="radio" class="custom-control-input" id="startingFase" 
+                    value="Despegando"
+                    name="relocatedFase" 
+                    formControlName="relocatedFase" 
+                    (change)="changeRFaseType($event)">
+            <label class="custom-control-label" for="startingFase">Etapa 4: Despegando</label>
+          </div>
+          <!-- Group of default radios - option 2 -->
+          <div class="custom-control custom-radio" [formGroup]="formRlc">
+            <input type="radio" class="custom-control-input" id="withoutRelocate" 
+                    value="NoAplica"
+                    name="relocatedFase" 
+                    formControlName="relocatedFase" 
+                    (change)="changeRFaseType($event)">
+            <label class="custom-control-label" for="withoutRelocate">No aplica reubicación</label>
+          </div>
+          <!-- Group of default radios - option 2 -->
+          <div class="custom-control custom-radio" [formGroup]="formRlc">
+            <input type="radio" class="custom-control-input" id="other" 
+                    value="Otro"
+                    name="relocatedFase" 
+                    formControlName="relocatedFase" 
+                    (change)="changeRFaseType($event)">
+            <label class="custom-control-label" for="other">Otro</label>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group fill">
+             <label></label>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group fill">
+             <label>En el caso de detectar necesidades pendientes por resolver en torno al negocio ¿Qué le recomendaría al emprendedor?</label>
+          </div>  
+          <div *ngFor="let recomendation of recoLst">
+            <label>
+              <input type="checkbox" [value]="recomendation.id" (change)="onRecomendChange($event)" />
+              {{recomendation.name}}
+            </label>
+          </div> 
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group fill">
+            <label></label>
+          </div>
+        </div> 
+        <div class="col-sm-12">
+          <div class="form-group fill">
+            <app-archivo></app-archivo>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group fill text-right">
+            <button (click)="finalizarReunion()" class="btn btn-success btn-sm btn-round has-ripple"><i class="fa fa-calendar-check-o"></i>Finalizar reunion</button>
+          </div>
+        </div>  
+        <div class="col-sm-12">
+          <app-card cardTitle="¿Qué compromisos debe cumplir el emprendedor previo a la próxima asistencia técnica?" [options]="false" >
+            <div class="input-group mb-3">
+              <input type="text" [(ngModel)]="todoListMessage" autocomplete="off" name="task-insert" class="form-control add_task_todo" placeholder="Tu respuesta" required="" (keyup)="todo_list_message_error = false">
+              <div class="input-group-append">
+                <button class="btn btn-primary" id="add-btn" [ngClass]="{'btn-danger': todo_list_message_error, 'btn-secondary': !todo_list_message_error}" (click)="createTodo()">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="new-task">
+              <!-- <div class="to-do-list mb-3">
+                <div class="d-inline-block">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" (change)="completeTodoList($event)">
+                    <span class="custom-control-label">Lorem Ipsum Dolor Sit Amet</span>
+                  </label>
+                </div>
+                <div class="float-right"><a href="javascript:" class="delete_todolist" appTodoListRemove><i class="far fa-trash-alt"></i></a></div>
+              </div>
+              <div class="to-do-list mb-3">
+                <div class="d-inline-block">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" (change)="completeTodoList($event)">
+                    <span class="custom-control-label">Industry's standard dummy text ever since the 1500s</span>
+                  </label>
+                </div>
+                <div class="float-right"><a href="javascript:" class="delete_todolist" appTodoListRemove><i class="far fa-trash-alt"></i></a></div>
+              </div>
+              <div class="to-do-list mb-3">
+                <div class="d-inline-block">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center">
+                    <input type="checkbox" class="custom-control-input" id="customCheck3" (change)="completeTodoList($event)">
+                    <span class="custom-control-label">The point of using Lorem Ipsum is that it has a more-or-less </span>
+                  </label>
+                </div>
+                <div class="float-right"><a href="javascript:" class="delete_todolist" appTodoListRemove><i class="far fa-trash-alt"></i></a></div>
+              </div>
+              <div class="to-do-list mb-3">
+                <div class="d-inline-block">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center">
+                    <input type="checkbox" class="custom-control-input" id="customCheck4" (change)="completeTodoList($event)">
+                    <span class="custom-control-label">Contrary to popular belief</span>
+                  </label>
+                </div>
+                <div class="float-right"><a href="javascript:" class="delete_todolist" appTodoListRemove><i class="far fa-trash-alt"></i></a></div>
+              </div>
+              <div class="to-do-list mb-3">
+                <div class="d-inline-block">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center">
+                    <input type="checkbox" class="custom-control-input" id="customCheck5" (change)="completeTodoList($event)">
+                    <span class="custom-control-label">There are many variations of passages of Lorem Ipsum</span>
+                  </label>
+                </div>
+                <div class="float-right"><a href="javascript:" class="delete_todolist" appTodoListRemove><i class="far fa-trash-alt"></i></a></div>
+              </div>
+              <div class="to-do-list mb-3">
+                <div class="d-inline-block">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center">
+                    <input type="checkbox" class="custom-control-input" id="customCheck6" (change)="completeTodoList($event)">
+                    <span class="custom-control-label">Sed ut perspiciatis unde omnis iste natus</span>
+                  </label>
+                </div>
+                <div class="float-right"><a href="javascript:" class="delete_todolist" appTodoListRemove><i class="far fa-trash-alt"></i></a></div>
+              </div>
+              <div class="to-do-list mb-3">
+                <div class="d-inline-block">
+                  <label class="check-task custom-control custom-checkbox d-flex justify-content-center">
+                    <input type="checkbox" class="custom-control-input" id="customCheck7" (change)="completeTodoList($event)">
+                    <span class="custom-control-label"> must explain to you how all this mistaken idea</span>
+                  </label>
+                </div>
+                <div class="float-right"><a href="javascript:" class="delete_todolist" appTodoListRemove><i class="far fa-trash-alt"></i></a></div>
+              </div>
+              <span [innerHTML]="newTodoList"></span> -->
+              <ng-template #todoTemplate></ng-template>
+            </div>
+          </app-card>
+        </div>
+        <div class="col-sm-12">
+          <app-card cardTitle="Acciones adicionales que desee comunicar a ÉPICO" [options]="false" >
+            <div class="input-group mb-3">
+              <input type="text" [(ngModel)]="agreementListMessage" autocomplete="off" name="task-insert" class="form-control add_task_todo" placeholder="Tu respuesta" required="" (keyup)="agreement_list_message_error = false">
+              <div class="input-group-append">
+                <button class="btn btn-primary" id="add-btn" [ngClass]="{'btn-danger': todo_list_message_error, 'btn-secondary': !todo_list_message_error}" (click)="createAgreement()">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="new-task"> 
+              <ng-template #agreementTemplate></ng-template>
+            </div>
+          </app-card>
+        </div>
+        <div class="col-sm-12">
+          <app-card cardTitle="Observaciones adicionales que desee comunicar a ÉPICO" [options]="false" >
+            <div class="input-group mb-3">
+              <input type="text" [(ngModel)]="observationListMessage" autocomplete="off" name="task-insert" class="form-control add_task_todo" placeholder="Tu respuesta" required="" (keyup)="observation_list_message_error = false">
+              <div class="input-group-append">
+                <button class="btn btn-primary" id="add-btn" [ngClass]="{'btn-danger': todo_list_message_error, 'btn-secondary': !todo_list_message_error}" (click)="createObservation()">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="new-task"> 
+              <ng-template #observationTemplate></ng-template>
+            </div>
+          </app-card>
+        </div>       
+      </div> 
+          
+    </app-card>  
+
+    <app-card [hidHeader]="true" [options]="false" cardClass="user-card user-card-3 support-bar1" [isCardFooter]="false">
+      <div class="text-center">
+        <img *ngIf="emprendedor.length!=0" class="img-radius img-fluid wid-150" [src]="emprendedor[0].url_foto" (error)="pictNotLoading($event)" alt="User image">
+        <h3 class="mb-1 mt-3 f-w-400">{{ this.agendaSeleccionada.persona1 }}</h3>
+        <p *ngIf="emprendedor.length!=0" class="mb-3 text-muted">{{ this.emprendedor[0].email }}</p>
+        <ul class="list-inline f-20 mt-3 mb-0">
+          <li class="list-inline-item"><a href="javascript:" class="text-facebook"><i class="fab fa-facebook-f"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-twitter"><i class="fab fa-twitter"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-dribbble"><i class="fab fa-dribbble"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-pinterest"><i class="fab fa-pinterest"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-youtube"><i class="fab fa-youtube"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-googleplus"><i class="fab fa-google-plus-g"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+      </div>
+    </app-card> 
+    
+    <app-card cardTitle="Emprendimiento" blockClass="task-details" [options]="false">
+      <table class="table">
+        <tbody>
+        <tr>
+          <td><i class="fa fa-building m-r-5"></i> Nombre:</td>
+          <td *ngIf="emprendedor.length!=0" class="text-right"><span class="float-right"><a class="text-secondary" href="javascript:"> {{this.emprendedor[0].nombre_emprendimiento}}</a></span></td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-user m-r-5"></i>Tipo Persona</td>
+          <td *ngIf="emprendedor.length!=0" class="text-right">{{this.emprendedor[0].tipo_persona}}</td>
+        </tr>         
+        <tr>
+          <td><i class="fa fa-user m-r-5"></i> RUC/RISE:</td>
+          <td *ngIf="emprendedor.length!=0" class="text-right">{{this.emprendedor[0].ruc_rise}}</td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-users m-r-5"></i> Socios:</td>
+          <td *ngIf="emprendedor.length!=0" class="text-right">{{this.emprendedor[0].cant_socios}}</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-chart-line m-r-5"></i> Ventas mensuales:</td>
+          <td *ngIf="emprendedor.length!=0" class="text-right">{{this.emprendedor[0].venta_mensual}}</td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-building m-r-5"></i> Nombre comercial:</td>
+          <td *ngIf="emprendedor.length!=0" class="text-right">{{this.emprendedor[0].nombre_comercial}}</td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-building m-r-5"></i>Razon social</td>
+          <td *ngIf="emprendedor.length!=0" class="text-right"><a class="text-secondary" href="javascript:">{{this.emprendedor[0].razon_social}}</a></td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-users m-r-5"></i>Cantidad de personal</td>
+          <td *ngIf="emprendedor.length!=0" class="text-right">{{this.emprendedor[0].numero_labora}}</td>
+        </tr> 
+        <!--tr>
+          <td><i class="fa fa-building m-r-5"></i>Lugar comercializacion</td>
+          <td class="text-right">{{this.emprendedor[0].lugar_comercializacion}}</td>
+        </tr-->
+        <tr *ngIf="isFilesEmpty()">
+          <td><i class="fa fa-cloud m-r-5"></i>Archivo</td>
+          <td class="text-right">
+            <!--a class="fa fa-download m-r-5" (click)="downloadFile(archivos[0])" target="_blank"> Descargar</a-->
+            <a class="fa fa-download m-r-5" [href]="archivos[0].url_archivo + archivos[0].modelo_negocio_archivo" target="_blank"> Descargar</a>
+          </td>
+        </tr>
+        <tr *ngIf="isFilesEmpty()">
+          <td><p>{{ archivos[0].modelo_negocio_archivo }}</p></td>
+        </tr>                       
+        </tbody>
+      </table>
+    </app-card>    
+
+    </div>
+  </div>
+</div>

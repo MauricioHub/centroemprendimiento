@@ -1,0 +1,97 @@
+<app-ui-modal [dialogClass]="'modal-lg'" #editarModal [static]="true">
+  <div class="app-modal-header" *ngIf="registro">
+    <h5 class="modal-title" [innerText]="registro.nombre">Modal Title</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="_cancelar();"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body" *ngIf="registro">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nombre</label>
+          <input type="text" class="form-control" id="Name" placeholder="Nombre" [(ngModel)]="registro.nombre">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Estado</label>
+          <select class="form-control" name="estado" [(ngModel)]="registro.estado" placeholder="Estado">
+            <option value="A">Activo</option>
+            <option value="I">Inactivo</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Tipo evento</label>
+          <select class="form-control" name="evento_mec" [(ngModel)]="registro.id_tipo_evento" [disabled]="isHorario">
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of listaTipoEvento" [value]="item.id" [innerText]="item.nombre"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Evento Epico</label>
+          <select class="form-control" name="evento_mec" [(ngModel)]="registro.id_evento_mec">
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of listaEventoMEC" [value]="item.id" [innerText]="item.title"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Color</label>
+          <input class="form-control" [(colorPicker)]="registro.color" [style.background]="registro.color"
+            [value]="registro.color" [cpPosition]="'bottom'" />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Cupos</label>
+          <input type="number" class="form-control" id="fecha" placeholder="Cupos" [(ngModel)]="registro.cupo">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Fecha</label>
+          <input type="date" class="form-control" id="fecha" placeholder="Fecha del evento"
+            [(ngModel)]="registro.fecha">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Hora inicio</label>
+          <input type="text" class="form-control" id="hora_inicio" placeholder="Hora inicio del evento"
+            [(ngModel)]="registro.hora_inicio">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Hora fin</label>
+          <input type="text" class="form-control" id="hora_fin" placeholder="Hora fin del evento"
+            [(ngModel)]="registro.hora_fin">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Codigo padre</label>
+          <input type="text" class="form-control" id="codigo" placeholder="Codigo del evento padre"
+            [(ngModel)]="registro.codigo" [disabled]="isHorario">
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Link del evento</label>
+          <input type="text" class="form-control" id="link_evento" placeholder="Link del evento"
+            [(ngModel)]="registro.url">
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="editarModal.hide()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="grabar()">Grabar</button>
+  </div>
+</app-ui-modal>

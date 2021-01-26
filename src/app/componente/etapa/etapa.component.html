@@ -1,0 +1,75 @@
+<div class="row" *ngIf="programa_selecionada">
+  <div class="order-md-1 " [class]="columnas == 2 ? 'col-md-8':'col-md-12' ">
+    <div class="merge-card">
+      <app-card 
+        cardTitle="{{programa_selecionada.sub_programa.sub_programa + '/' + programa_selecionada.etapa.etapa}}" 
+        captionClass="mb-0 text-muted" 
+        cardClass="mb-0" 
+        blockClass="p-0" 
+        [options]="false">
+        <a href="javascript:" [ngClass]="{'etapaAprobada': programa_selecionada.inscripcionEtapa.estado == 'AP'}">
+          <img [src]="programa_selecionada.etapa.url_banner" alt="" class="img-fluid">
+        </a>
+      </app-card>
+      <app-card [hidHeader]="true" cardClass="mb-0" [options]="false">
+        <a href="javascript:" class="text-h-primary">
+          <h6 [innerText] = "programa_selecionada.emprendimiento.nombre ? programa_selecionada.emprendimiento.nombre : ''">The new Lorem Ipsum is simply</h6>
+        </a>
+        <p class="text-muted mb-0" [innerText]="programa_selecionada.emprendimiento?programa_selecionada.emprendimiento.descripcion_emprendimiento:''">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+          Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+          printer took a galley of type and scrambled it to make a type specimen book.
+        </p>
+      </app-card>
+    </div>
+  </div>
+  <div class="order-md-2 " [class]="columnas == 2 ? 'col-md-4':'col-md-12' ">
+    <app-card cardTitle="Actividades" cardClass="task-card" [options]="false">
+      <div [ngClass]="{'etapaAprobada': programa_selecionada.inscripcionEtapa.estado == 'AP'}">
+        <app-actividad [actividades]="programa_selecionada.actividades" [level]="'0'" (ejecutar_actividad)="ejecutar_actividad($event)"></app-actividad>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<app-ui-modal #actividadModal [dialogClass]="'modal-lg'">
+  <div class="app-modal-header">
+    <h5 class="modal-title" id="tituloActividad">Modal Title</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="actividadModal.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <div #cuerpoActividad id="cuerpoActividad">
+    </div>
+  </div>
+  <div class="app-modal-footer" id="footerModal">
+    <!--button type="button" class="btn btn-warning btn-sm btn-round has-ripple mr-2" data-dismiss="modal" (click)="actividadModal.hide()">Cancelar</button-->
+    <button type="button" class="btn btn-success btn-sm btn-round has-ripple mr-2" *ngIf="btn_grabar" (click)="actualizar_actividad()">Grabar</button>
+    <button type="button" class="btn btn-info btn-sm btn-round has-ripple mr-2" *ngIf="btn_grabarFinalizar" (click)="finalizar_actividad()">Grabar y finalizar</button>
+  </div>
+</app-ui-modal>
+
+<app-ui-modal #actividadTaller [dialogClass]="'modal-lg'" [static]="true">
+  <div class="app-modal-header" *ngIf="actividad_seleccionada">
+    <h5 class="modal-title" [innerText]="actividad_seleccionada.actividad">Modal Title</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="cancelarTaller();"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <div class="row">
+      <div class="col-12" *ngIf="cod_referencia">
+        <app-events 
+          [codigo]="cod_referencia" 
+          [fecha_desde]="fecha_actual" 
+          [title]="'Talleres'" 
+          [id_persona]="programa_selecionada.sub_programa.id_persona"
+          (getAgenda)="setAgenda($event)"></app-events>
+      </div>
+      <div class="col-12" *ngIf="!cod_referencia">
+        No hay horarios para este taller
+      </div>
+    </div>
+  </div>
+</app-ui-modal>
+
+<div #contenidoExterno id="contenidoExterno">
+</div>
+

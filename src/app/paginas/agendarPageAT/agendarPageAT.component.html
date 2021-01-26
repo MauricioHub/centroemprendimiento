@@ -1,0 +1,38 @@
+<app-card cardTitle="Agenda asistencia técnica" [options]="false" captionClass="mb-0 text-muted" cardClass="mb-0"
+  blockClass="p-0">
+  <div class="row align-items-center m-l-0">
+    <div class="col-sm-6 feed-card">
+      
+        <div class="row m-b-10 m-t-10">
+          <div class="col-auto p-r-0">
+            <i class="bg-c-green feed-icon" style="font-size: 3px;"></i>
+          </div>
+          <div class="col">
+            <span>Horario disponible</span>
+          </div>
+        </div>
+        <div class="row m-b-10">
+          <div class="col-auto p-r-0">
+            <i class="bg-c-red feed-icon" style="font-size: 3px;"></i>
+          </div>
+          <div class="col">
+            <span class="m-b-5">Horario no disponible</span>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-6 text-right">
+      <!--button class="btn btn-info btn-sm btn-round has-ripple" (click)="agendar()">
+        <i class="feather icon-save"></i>Finalizar
+      </button>
+      <button class="btn btn-info btn-sm btn-round has-ripple" (click)="descargarICS()" id="descargarICS">
+      </button-->
+    </div>
+  </div>
+  <div class="row align-items-center m-l-0">
+    <div class="col-xl-12 col-sm-12" *ngIf="listaEventos">
+      <app-agendar [listaEventos]="listaEventos" [horarios]="horarios" [maxDay]="maxDay" [minHoras]="minHoras"
+        (agenda)="setEvento($event);">
+      </app-agendar>
+    </div>
+  </div>
+</app-card>

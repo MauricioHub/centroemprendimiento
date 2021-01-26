@@ -1,0 +1,186 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-xl-12 pro-det-mostrar" *ngIf="!editable || !editar">
+      <br>
+      <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Información</h6>
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="m-b-10 f-w-600">Nombres</p>
+          <h6 class="text-muted f-w-400" [innerText]="persona.nombre">0023-333-526136</h6>
+        </div>
+        <div class="col-sm-6">
+          <p class="m-b-10 f-w-600">Apellidos</p>
+          <h6 class="text-muted f-w-400" [innerText]="persona.apellido">0023-333-526136</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="m-b-10 f-w-600">Genero</p>
+          <h6 class="text-muted f-w-400" [innerText]="persona.genero">0023-333-526136</h6>
+        </div>
+        <div class="col-sm-6">
+          <p class="m-b-10 f-w-600">Fecha de nacimiento</p>
+          <h6 class="text-muted f-w-400" [innerText]="persona.fecha_nacimiento">0023-333-526136</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="m-b-10 f-w-600">Identificación</p>
+          <h6 class="text-muted f-w-400" [innerText]="persona.identificacion">0023-333-526136</h6>
+        </div>
+        <div class="col-sm-6">
+          <p class="m-b-10 f-w-600">Nivel académico</p>
+          <h6 class="text-muted f-w-400" [innerText]="persona.nivel_academico">0023-333-526136</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="m-b-10 f-w-600">Situación laboral</p>
+          <h6 class="text-muted f-w-400" [innerText]="persona.situacion_laboral">0023-333-526136</h6>
+        </div>
+        <div class="col-sm-6">
+          <p class="m-b-10 f-w-600">Localizacion</p>
+          <h6 class="text-muted f-w-400" [innerHtml]="persona.ciudad + '<br>' + persona.direccion">
+            0023-333-526136</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12 pro-det-edit" *ngIf="editable && editar">
+      <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Información</h6>
+      <form id='form-datos-personales' [formGroup]="formDatos">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Nombres completos</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name='nombre' uppercase [(ngModel)]="persona.nombre" required
+              placeholder="Nombre" formControlName="nombre"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.nombre)}">
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.nombre)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Apellidos completos</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name='apellido' [(ngModel)]="persona.apellido " required
+              placeholder="Apellido" formControlName="apellido"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.apellido)}">
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.apellido)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Genero</label>
+          <div class="col-sm-9">
+            <select class="form-control" name="genero" required placeholder="Seleccione" [(ngModel)]="persona.id_genero"
+              formControlName="genero" [ngClass]="{'is-invalid': getValid(formDatos.controls.genero)}">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaGenero" [value]="item.id" [innerText]="item.nombre">
+                Seleccione
+              </option>
+            </select>
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.genero)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Fecha de nacimiento</label>
+          <div class="col-sm-9">
+            <input type="date" class="form-control" name="fecha_nacimiento" formControlName="fecha_nacimiento"
+              [(ngModel)]="persona.fecha_nacimiento" required placeholder="dd/mm/yyyy"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.fecha_nacimiento)}">
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.fecha_nacimiento)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Identificación</label>
+          <div class="col-sm-9">
+            <br>
+            <h6 class="text-muted" [innerText]="persona.identificacion" *ngIf="persona.identificacion">0023-333-526136
+            </h6>
+            <input type="text" class="form-control" name='identificacion' [(ngModel)]="persona.identificacion " required
+              placeholder="Apellido" *ngIf="!persona.identificacion" formControlName="identificacion"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.identificacion)}">
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.identificacion)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Provincia</label>
+          <div class="col-sm-9">
+            <select class="form-control" name="provincia" required 
+              [(ngModel)]="persona.id_provincia" 
+              formControlName="provincia"
+              (change) = "consultarUbicaciones(persona.id_provincia)"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.provincia)}">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaProvincia" [value]="item.id" [innerText]="item.nombre">
+                Seleccione
+              </option>
+            </select>
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.ciudad)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Ciudad</label>
+          <div class="col-sm-9">
+            <select class="form-control" name="ciudad" required [(ngModel)]="persona.id_ciudad" formControlName="ciudad"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.ciudad)}">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaCiudad" [value]="item.id" [innerText]="item.nombre">
+                Seleccione
+              </option>
+            </select>
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.ciudad)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Dirección</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="direccion" [(ngModel)]="persona.direccion" required
+              placeholder="Dirección" formControlName="direccion"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.direccion)}">
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.direccion)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Nivel Academico</label>
+          <div class="col-sm-9">
+            <select class="form-control" name="id_nivel_academico" required placeholder="Seleccione"
+              [(ngModel)]="persona.id_nivel_academico" formControlName="nivel_academico"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.nivel_academico)}">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaNivelAcademico" [value]="item.id" [innerText]="item.nombre">Seleccione
+              </option>
+            </select>
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.nivel_academico)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bolder">Situación laboral</label>
+          <div class="col-sm-9">
+            <select class="form-control" name="id_situacion_laboral" required placeholder="Seleccione"
+              [(ngModel)]="persona.id_situacion_laboral" formControlName="situacion_laboral"
+              [ngClass]="{'is-invalid': getValid(formDatos.controls.situacion_laboral)}">
+              <option value="">Seleccione</option>
+              <option *ngFor="let item of listaSituacionLaboral" [value]="item.id" [innerText]="item.nombre">Seleccione
+              </option>
+            </select>
+            <label id="validation-nombre-error" *ngIf="getValid(formDatos.controls.situacion_laboral)"
+              class="error jquery-validation-error small form-text invalid-feedback">Este campo es obligatorio</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label"></label>
+          <div class="col-sm-9">
+            <button type="submit" class="btn btn-primary col-sm-6" (click)="grabarPersona(formDatos)">Grabar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,163 @@
+<div class="row"> 
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" cardClass="user-profile-list" [options]="false">
+      <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-primary btn-sm" (click)="modalCustomer.show();"><i class="feather icon-plus"></i>Nuevo asistente t&#233;cnico</button>
+      </div>       
+      <br>
+      <div class="dt-responsive table-responsive">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped row-border table-hover">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Ciudad Domiclio</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Identificacion</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Edicion</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asistente of asistentesTecnicos">
+            <td>
+              <div class="d-inline-block align-middle">
+                <img [src]="asistente.url_foto" (error)="pictNotLoading($event)" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
+                <div class="d-inline-block">
+                <h6 class="m-b-0">{{asistente.nombre + ' ' + asistente.apellido}}</h6>
+                <p class="m-b-0">{{asistente.email}}</p>
+                </div>
+              </div>
+            </td>
+            <td>{{asistente.ciudad_domicilio}}</td>
+            <td>{{asistente.direccion}}</td>
+            <td>{{asistente.telefono}}</td>
+            <td>{{asistente.tipo_identificacion + ': ' + asistente.identificacion}}</td>
+            <td>{{asistente.fecha_inicio}}</td>
+            <td>{{asistente.fecha_fin}}</td>
+            <td>{{asistente.edicion}}</td>
+            <td>
+              <span class="badge badge-light-success">{{asistente.estado_asistente_tecnico}}</span>
+                <div class="overlay-edit">
+                <button routerLink="/mnt-asistentes-tecnicos-horario/{{asistente.nombre + ' ' + asistente.apellido}}/{{asistente.id_asistente_tecnico}}" type="button" class="btn btn-icon btn-success"><i class="feather icon-calendar"></i></button>
+                  <button type="button" class="btn btn-icon btn-danger"><i class="feather icon-trash-2"></i></button>
+                </div>
+            </td> 
+          </tr>
+        </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+
+
+
+<app-ui-modal #modalCustomer [dialogClass]="'modal-lg btn-page'" id="modalCustomer">
+  <div class="app-modal-header">
+      <h5 class="modal-title">Agregar Asistente T&#233;cnico</h5>
+      <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="modalCustomer.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <p>Busque Persona por Identificaci&oacute;n</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <select class="form-control" id="TipoIdentificacion" [(ngModel)]="persona.tipo_identificacion">
+            <option value="">Tipo de identificaci&oacute;n</option>
+            <option value="R">RUC</option>
+            <option value="C">Cedula</option>
+            <option value="P">Pasaporte</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group fill">
+          <input type="number" class="form-control" 
+                  id="NumeroIdentificacion"
+                  [(ngModel)]="this.identificacion"
+                  (ngModelChange)="personBrowse($event)"
+                  placeholder="Ingrese Identificaci&oacute;n">
+        </div>
+      </div>
+    </div>  
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <input type="text" class="form-control" id="Nombre" placeholder="Nombre" [(ngModel)]="persona.nombre">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <input type="text" class="form-control" id="Apellido" placeholder="Apellido" [(ngModel)]="persona.apellido">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <input type="email" class="form-control" id="Email" placeholder="Email" [(ngModel)]="persona.email">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <input type="number" class="form-control" id="Telefono" placeholder="Telefono" [(ngModel)]="persona.telefono">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="Edicion">Edici&oacute;n</label>
+          <select [(ngModel)]="edicionSeleccionada" (change)="onSelectEdicion(edicionSeleccionada)"  class="form-control" id="Edicion">
+            <option *ngFor="let edicion of ediciones" [ngValue]="edicion">
+                {{edicion.nombre}}
+            </option>
+          </select>          
+        </div>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="input-group mb-3">
+            <label for="dp1">Fecha Inicio Periodo</label>
+            <input class="form-control" placeholder="yyyy-mm-dd"
+                    name="dp1" [(ngModel)]="startDate"
+                    (ngModelChange)="startDateBrowse($event)"
+                    ngbDatepicker #d1="ngbDatepicker">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                    <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                </button>
+            </div>          
+        </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group mb-3">
+            <label for="dp2">Fecha Fin Periodo</label>
+            <input class="form-control" placeholder="yyyy-mm-dd"
+                    name="dp2" [(ngModel)]="endDate"
+                    (ngModelChange)="endDateBrowse($event)"
+                    ngbDatepicker #d2="ngbDatepicker">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button">
+                    <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+            </div>
+        </div>
+      </div>  
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="modalCustomer.hide()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="nuevoAsistenteTecnico()">Guardar</button>
+  </div>
+</app-ui-modal>
+

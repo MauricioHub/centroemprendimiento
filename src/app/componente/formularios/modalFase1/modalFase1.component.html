@@ -1,0 +1,163 @@
+<!--div class="modal-dialog modal-dialog-centered modal-lg" role="document"-->
+
+  <div id="carouselExampleIndicators" class="" data-ride="carousel">
+      <div class="modal-content">
+          <div class="modal-body">
+              <div class="text-left titulo-modal">
+                  <img src="images/logo_ce2.png" style ="width: 150px;">
+              </div>
+              <div class="carousel-inner text-center">
+                  <div class="" data-interval="120000" id="bloque1" style="display: block;">
+                      <div class="row justify-content-center texto-modal">
+                          <div class="col-lg-9">
+                              <h4 class="mb-3 texto-modal">Bienvenido a nuestro Centro de Emprendimiento Épico</h4> 
+                              <p class="mb-2 " style="font-size: 15px;">Un espacio donde te ayudaremos a convertir tu idea en un modelo de negocio innovador y sostenible.</p>
+                              <br>
+                              <p class="mb-2 " style="font-size: 14px;font-style: italic;">¡Juntos, lo hacemos posible!</p>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="carousel-item" data-interval="120000" id="bloque2" style="display: none;">
+                      <p class="mb-2 " style="font-size: 15px;">¡Dale clic al video y conoce más sobre nosotros!</p>
+                      <br>
+                      <!--video autoplay="0" src="http://localhost/archivos/video/descubriendo_video_1.mp4" style="width: 100%" controls=""
+                            #videoIntro onended="habilitarBotones();"></video-->
+                      <div class="row" id="videoIntro">
+                        <iframe style="width: 100%; height: 350px" id="videoIntro" src="https://www.youtube.com/embed/zaPAg7QDisE?&autoplay=1" frameborder="0" 
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>
+                      <br>
+                  </div>
+
+                  <div class="carousel-item" data-interval="120000" id="bloque3" style="display: none;">
+                      <div class="row justify-content-center texto-modal">
+                          <div class="col-lg-9">
+                              <h4 class="mb-3 texto-modal">EXAMEN PILARES FUNDAMENTALES DEL EMPRENDIMIENTO</h4> 
+                              <div class="row" style="text-align: left;">
+                                  <div class="col-sm-6">
+                                      <p class="m-b-10 f-w-600">1. Los pilares fundamentales del emprendimiento son:</p>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" #pilares1 name="radio_pilares" class="custom-control-input">
+                                          <span class="custom-control-label" for="pilares1">5</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="pilares2" name="radio_pilares" class="custom-control-input">
+                                          <span class="custom-control-label" for="pilares2">4</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="pilares3" name="radio_pilares" class="custom-control-input">
+                                          <span class="custom-control-label" for="pilares3">2</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="pilares4" name="radio_pilares" class="custom-control-input">
+                                          <span class="custom-control-label" for="pilares4">Ninguna de las anteriores</span>
+                                      </label>
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <p class="m-b-10 f-w-600">2. ¿Toda gran empresa empieza por? </p>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="emprensa_r1" name="radio_empresa" class="custom-control-input">
+                                          <span class="custom-control-label" for="emprensa_r1">a. Capital para poner el negocio</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" #emprensa_r2 name="radio_empresa" class="custom-control-input">
+                                          <span class="custom-control-label" for="emprensa_r2">b. Una gran idea de alguien que decidió llevarla a cabo</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="emprensa_r3" name="radio_empresa" class="custom-control-input">
+                                          <span class="custom-control-label" for="emprensa_r3">c. Publicitar el negocio</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="emprensa_r4" name="radio_empresa" class="custom-control-input">
+                                          <span class="custom-control-label" for="emprensa_r4">d. Estar bien ubicados en el mercado</span>
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="row" style="text-align: left;">
+                                  <div class="col-sm-6">
+                                      <p class="m-b-10 f-w-600">3. La clave para que alcances el éxito en tu negocio son:</p>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="clave_éxito1" name="clave_éxito_radio" class="custom-control-input">
+                                          <span class="custom-control-label" for="clave_éxito1">a. La ubicación de mi negocio</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="clave_éxito2" name="clave_éxito_radio" class="custom-control-input">
+                                          <span class="custom-control-label" for="clave_éxito2">b. Capital para llevarlo a cabo </span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" #clave_éxito3 name="clave_éxito_radio" class="custom-control-input">
+                                          <span class="custom-control-label" for="clave_éxito3">c. Los clientes</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="clave_éxito4" name="clave_éxito_radio" class="custom-control-input">
+                                          <span class="custom-control-label" for="clave_éxito4">d. Publicitar el negocio</span>
+                                      </label>
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <p class="m-b-10 f-w-600">4. La característica más importante que debe tener el emprendedor que ama a su negocio es:</p>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="caracteristica1" name="radio_caracteristica" class="custom-control-input">
+                                          <span class="custom-control-label" for="caracteristica1">a. Creatividad e innovación, </span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="caracteristica2" name="radio_caracteristica" class="custom-control-input">
+                                          <span class="custom-control-label" for="caracteristica2">b. Persistencia y resistencia,</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="caracteristica3" name="radio_caracteristica" class="custom-control-input">
+                                          <span class="custom-control-label" for="caracteristica3">c. Flexibilidad </span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" #caracteristica4 name="radio_caracteristica" class="custom-control-input">
+                                          <span class="custom-control-label" for="caracteristica4">d. Pasión </span>
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="row" style="text-align: left;">
+                                  <div class="col-sm-6">
+                                      <p class="m-b-10 f-w-600">5. Debes conocer muy bien a tu __________ para buscar diferenciarte y hacer destacar a tu emprendimiento.</p>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="diferenciar_emp1" name="diferenciar_emp_radio" class="custom-control-input">
+                                          <span class="custom-control-label" for="diferenciar_emp1">a. Cliente</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="diferenciar_emp2" name="diferenciar_emp_radio" class="custom-control-input">
+                                          <span class="custom-control-label" for="diferenciar_emp2">b. Proveedor</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" #diferenciar_emp3 name="diferenciar_emp_radio" class="custom-control-input">
+                                          <span class="custom-control-label" for="diferenciar_emp3">c. Competencia</span>
+                                      </label>
+                                      <label class="custom-control custom-radio">
+                                          <input type="radio" id="diferenciar_emp4" name="diferenciar_emp_radio" class="custom-control-input">
+                                          <span class="custom-control-label" for="diferenciar_emp4">d. Negocio </span>
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+
+          <div class="modal-body text-center  py-4">
+              <a class="carousel-control-prev btn-morado" href="javascript:" role="button" data-slide="prev" (click)="atras()"
+                id="btn-atras">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="ml-2">Atrás</span>
+              </a>
+              <a class="carousel-control-next btn-morado" href="javascript:" role="button" data-slide="next" (click)="pasar()"
+                id="btn-listo">
+                  <span class="mr-2">¡Siguiente!</span>
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </a>
+              <a class="carousel-control-next btn-morado" href="javascript:" role="button" data-slide="next" (click)="validarPreguntas();"
+                id="btn-finalizar" style="display: none;">
+                  <span class="mr-2">Finalizar</span>
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </a>
+          </div>
+      </div>
+  </div>
